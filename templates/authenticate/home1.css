@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap');
+
+*
+{
+	margin:0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.homepage{
+    width: 100%;
+    height: auto;
+}
+
+.head{
+    width: 100%;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 85px;
+    padding: 5px;
+    padding-top: 0px;
+    display: flex;
+    border-bottom: 2px solid rgba(49, 45, 45, 0.479);
+
+  
+    
+}
+
+.logo{
+    height: 85px;
+    width: 100px;
+    padding: 12px;
+    margin-left: 50px;
+    padding-right: 0px;
+    
+
+}
+
+img {
+    width: 100%; /* or any custom size */
+    height: 100%; 
+    object-fit: contain;
+    display: block;
+    
+}      
+
+.title{
+    font-size: 40px;
+    font-weight: bolder;
+    color: #1a73e8;
+    padding: 5px;
+    padding-top: 20px;
+    text-shadow:white;
+    width: 150px;
+    height: 100%;
+    text-shadow: 1px 1px 1px #879cd6,
+                    1px 2px 1px #879cd6,
+                    1px 3px 1px #879cd6;
+
+}
+
+/* Student profile */
+.stdprofile{
+    display: flex;
+    padding:0px 25px 0px 25px;
+    width: fit-content;
+    margin-left: 740px;
+   
+
+
+
+}
+
+.searchcontainer{
+    width: 250px;
+    height: 39px;
+    margin: auto;
+    margin-right: 35px;
+    border-radius: 50px;
+    position: relative;
+    border: 3.5px solid #1a73e8;
+    padding: 0px 10px;
+}
+
+.searchbox{
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.search{
+    border: none;
+    height: 100%;
+    width: 100%;
+    padding: 0px 5px;
+    font-size: 17px;
+    font-family: "Nunito";
+    color: #424242;
+    font-weight: 500;
+
+}
+
+.search:focus{
+    outline: none;
+}
+
+td .material-icons{
+    font-size: 26;
+    color: #1a73e8;
+}
+
+.stdbtn{
+
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: fit-content;
+    width: fit-content;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: auto;
+    margin-right: 10px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 2px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+
+    
+}
+
+.stdbtn a{
+    text-decoration: none;
+    color: white;
+    display: flex;
+}
+
+.stdbtn:hover{
+    box-shadow: 0px 0px 2px 1px rgba(17, 39, 46, 0.5);
+    background-color:#1c60c5;
+}
+
+
+
+header{
+    border: 2px solid black;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex
+}
+
+.title-container{
+    flex: 1;
+    height: 3rem;
+    font-family: 'Poppins';
+    text-align: center;
+    padding: 0 2rem;
+    color: #3552a1;
+    letter-spacing: 2px;
+    font-size: 14px;
+    line-height: 3rem;
+}
+
+.bold{
+    font-weight: bold;
+    color: #091c36;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    margin: 0 0 0 4px;
+}
+
+.container{
+    max-width: 80rem;
+    padding: 0 2rem;
+    border: 2px solid yellow;
+    height: 3rem;
+    margin: 0 auto;
+    display: flex;
+}
+
+.logo-container{
+    flex: 1; 
+}
+
+.nav-btn{
+    font-family: 'Poppins', sans-serif;
+    flex: 5;
+    border: 2px solid green;
+}
+
+.nav-links > ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.navlink{
+    position: relative;
+}
+.navlink a i{
+    display: flex;
+    align-items: center;
+    margin-left: .2rem;
+    padding-top: 2px;
+
+}
+
+.navlink > a{
+    line-height: 3rem;
+    color:#091c36;
+    padding: 0 .8rem;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navlink > a:hover{
+    transform: scale(1.1);
+}
+
+/* Drop Down */
+ul{
+    list-style: none;
+}
+
+.dropdown{
+    position:absolute;
+    top: 100%;
+    left: 0;
+    width: fit-content;
+    border: 2px solid pink;
+    height: auto;
+    transform: translateY(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: .5s;
+    transform: translateX(-35px);
+
+}
+
+.dropdown > ul{
+    list-style: none;
+    position: relative;
+
+}
+
+
+.dropdown-link > a{
+    display: flex;
+    background-color: #fff;
+    color: #1a73e8;
+    text-decoration: none;
+    padding: .5rem 13px;
+    align-items: center;
+    
+    transition: .3s;
+}
+
+.dropdown-link:hover > a{
+    background-color: #1a73e8;
+    color: #fff;
+}
+
+.dropdown-link:not(:nth-last-child(2)){
+    border-bottom: 1px solid #efefef;
+}
+.dropdown-link i{
+    transform: rotate(-90deg);
+    
+
+}
+
+.dropdown-link a i{
+    justify-content: center;
+    right: 0;
+}
+
+.arrow{
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    top: -4.5px;
+    left:50%;
+    background-color: #fff;
+    transform: rotate(45deg);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.dropdown-link:first-child:hover ~ .arrow{
+    background-color: #1a73e8;
+}
+
+.dropdown2{
+    width: fit-content;
+    position: absolute;
+    height: fit-content;
+    margin-left: 78px;
+    top: 0.02rem;
+    padding-left: 0.5rem;
+    opacity: 0;
+    transition: .5s;
+    transform: translateX(8px);
+    
+}
+
+.dropdown2 .arrow{
+left: 2.8rem;
+top: 12px;
+}
+
+.navlink:hover > .dropdown,
+.dropdown-link:hover > .dropdown2
+{
+    transform: translate(0. 0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* home page intro image */
+
+
+
+.introimg{
+    width: auto;
+    height: 500px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: #424242;
+    background-color: rgba(0, 0, 0, 0.2);
+
+
+}
+
+
+.ptufull{
+    height: fit-content;
+    width: auto;
+}
+.title1{
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+
+}
+.subtitle{
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+
+}
+
+.title1 h1{
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    color:snow;
+    text-shadow: 1px 1px 1px #141313,
+                    1px 2px 1px #141313,
+                    1px 3px 1px #141313,
+                    1px 4px 1px #141313,
+                    1px 5px 1px #141313,
+                    1px 6px 1px #141313,
+                    1px 7px 1px #141313,
+                    1px 8px 1px #141313,
+                    1px 9px 1px #141313,
+                    1px 10px 1px #141313;
+}
+.subtitle h3{
+    font-weight: bolder;
+    letter-spacing: 1.5px;
+    color:snow;
+    text-shadow: 1px 1px 1px #141313,
+                    1px 2px 1px #141313,
+                    1px 3px 1px #141313,
+                    1px 4px 1px #141313,
+                    1px 5px 1px #141313,
+                    1px 6px 1px #141313,
+                    1px 7px 1px #141313,
+                    1px 8px 1px #141313;
+}
+
+.wholebg{
+    background-image: url("ptubg.jpg");
+    background-size: cover;
+    background-size: 100% 100%;
+}
+
+/* main content */
+
+.main{
+    position: absolute;
+    border: 2px solid brown;
+    height: 1000px;
+    background-color: rgba(0, 0, 0, 0.01);
+    display: flex;
+    justify-content: space-between;
+    
+    
+}
+
+.contenttext{
+    height: fit-content;
+    left: 7%;
+    width: 53%;
+    position: relative;
+    top: 13%;
+    background-color: #fff;
+    box-shadow: 0px 1px 11px 0px rgba(3, 128, 185, 0.968);
+    padding: 20px;
+    
+    
+
+}
+
+.news{
+    position: relative;
+    top: 13%;
+    width: 30%;
+    height: 400px;
+    right: 7%;
+    box-shadow: 0px 1px 11px 0px rgba(3, 128, 185, 0.968);
+
+}
+
+.pectext{
+    position: relative;
+    height: fit-content;
+    font-size: 20px;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    word-wrap: normal;
+    font-family: 'Montserrat', sans-serif;
+    color: #1066d6;
+    line-height: 27px;
+    font-weight: 700;
+    
+
+    
+}
+
+

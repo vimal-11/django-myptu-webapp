@@ -1,0 +1,15 @@
+{% autoescape off %}
+
+Welcome to MyPTU
+
+Hello {{ name }}!
+
+Thank you for registering in our website. In order to activate your account, please confirm your email by clicking the following link.
+
+Confirmation Link: http://{{ domain }}{% url 'authenticate:activate' uidb64=uid token=token %}
+
+Thank you
+Vimal
+(MyPTU)
+
+{% endautoescape %}

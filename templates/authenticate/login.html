@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Student Login</title>
+        <link rel="stylesheet" href="loginstyle.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+         <div class="bg_img">
+             <div class="content">
+                <header>Student Login</header>
+                <form action="/login" method="POST">
+                {% csrf_token %}
+                    <div class="feild">
+                        <span class="material-icons">
+                            person
+                        </span>
+                        <input type="text" Required placeholder="Username or Email" id="username" name="username">
+                    </div>
+                    <div class="feild space">
+                        <span class="material-icons">
+                            lock
+                        </span>
+                        <input type="password" class="password" required placeholder="Password" id="password" name="password">
+                        <span class="show">SHOW</span>
+                    </div>
+                    <div class="forgotps">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <div class="feild">
+                       <input type="submit" value="LOGIN">
+                    </div>
+                    <div class="loginwith">Or login with</div>
+                    <div class="social">
+                        <ul class="icons">
+                            <li><img src="facebook.png"></li>
+                            <li><img src="search.png"></li>
+                            <li><img src="github.png" style="height: 44px; width: 44px; margin-right: 2px;"></li>
+                        </ul>
+                    </div>
+                    <div class="signup">
+                        Don't have an account ? 
+                        <a href="/signup"> Sign up</a>
+                    </div>
+                </form> 
+             </div>
+         </div>
+    </body>
