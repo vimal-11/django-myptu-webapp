@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
@@ -90,20 +91,25 @@ def loginUser(request):
         
         if user is not None:
             login(request, user)
-            fname = user.first_name 
-            return redirect('authenticate:profilepage', pk=user.pk)
+            fname = user.first_name
+
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next')) 
+            else:
+                return redirect('authenticate:profilepage', pk=user.pk)
         else:
             messages.error(request, "Bad Credentials!")
             return redirect('authenticate:home')
 
 
     return render(request, 'authenticate/login.html')
-
+    
+@login_required
 def logoutUser(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('authenticate:home')
-    return redirect('authenticate:login')
+    #if request.method == 'POST':
+    logout(request)
+    return redirect('authenticate:home')
+    #return redirect('authenticate:login')
 
 def index(request):
     return render(request, 'authenticate/index.html')

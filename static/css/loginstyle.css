@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.bg_img{
+    background: url('login8.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg_img:after{
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 999;
+    width: 390px;
+    text-align: center;
+    padding:60px 32px;
+    background: rgba(255,255,255,0.07);
+    box-shadow: -1px 4px 61px 0px rgba(0,0,0,0.8);
+   
+}
+
+.content header{
+    color: white;
+    font-size: 33px;
+    font-weight: 600;
+    margin: 0 0 35px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.feild{
+    position: relative;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background: rgba(255,255,255,0.94);
+}
+
+.feild span{
+    color: #222;
+    width: 40px;
+    line-height: 45px;
+}
+
+.feild input{
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #222;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.show{
+    position: absolute;
+    right: 13px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #222;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    display: none;
+}
+
+.password:valid ~ .show{
+    display: block;
+}
+
+.space{
+    margin-top: 16px;
+}
+
+.forgotps{
+    text-align: left;
+    margin: 11px 0;
+}
+
+.forgotps a{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.forgotps a:hover{
+    text-decoration: underline;
+}
+
+input[type="submit"]{
+    background: #3498db;
+    border: 1px solid #2691d9;
+    color: white;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.loginwith{
+    color: white;
+    margin: 20px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.loginlink{
+    display: flex;
+    cursor: pointer;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.social{
+    text-align: center;
+
+}
+
+.social ul{
+    list-style: none;
+}
+.social ul li{
+    display: inline-block;
+    cursor: pointer;
+    margin: 0px 20px;
+}
+
+.social ul li img{
+    width: 40px;
+    height: 42px;
+}
+
+.signup{
+    color: white;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 22px;
+}
+
+.signup a{
+    color: #40adf7;
+    text-decoration: none;
+}
+
+.signup a:hover{
+    text-decoration: underline;
+}
+
