@@ -1,0 +1,36 @@
+{% extends "forums/base.html" %}
+{% load hitcount_tags %}
+{% block content %}
+        <div class="conatainer">
+            <div class="dir">
+                <span><a href="{% url 'forums:forum' %}">Forum</a> >> <a href="{{ catgr.get_url }}">{{ catgr.title }}</a></span>
+            </div>
+            <div class="post-table">
+                <div class="table-head">
+                    <div class="prof-pic">User</div>
+                    <div class="subject">Subject</div>
+                    <div class="replies">Views<span>/ Replies</span></div>
+                    <div class="posted-on">Posted On</div>
+                </div>
+
+                {% for post in topic_queries  %}             
+                <div class="table-row">
+                    <div class="prof-pic"><i class="material-icons">person</i></div>
+                    <div class="subject"><a href="{{ post.get_url }}">{{ post.title }}</a>
+                        <br>
+                        <br>
+                        <span> Posted by <b><a href="#">{{ post.user.username }}</a></b></span>
+                    </div>
+                    <div class="replies">{{ post.num_rply }} replies | {% get_hit_count for post %} views</div>
+                    <div class="posted-on">{{ post.date | date }}</div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <!--Pagination-->
+            <div class="pagination">
+                Page: {% for num_page in topic_queries.paginator.page_range %} <a href="?page={{num_page}}">{{ num_page }}</a>{% endfor %}
+            
+            </div>
+        </div>
+ {% endblock content %}

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PTU</title>
-        <link rel="stylesheet" href="home1.css">
+        <link rel="stylesheet" href="{% static '/css/home1.css' %}">
         <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
@@ -36,8 +38,8 @@
                         </table>
                     </div>
                     <button type="button" class="stdbtn">
-                        <a href="/login">
-                            <span class="stdbtn_txt" style="padding-right: 7px;">Profile </span>
+                        <a href="{% url 'authenticate:login' %}">
+                            <span class="stdbtn_txt" style="padding-right: 7px;">Login </span>
                             <span class="material-icons">
                                 account_circle
                             </span>
@@ -56,7 +58,7 @@
                             <div class="nav-links">
                                 <ul>
                                     <li class="navlink">
-                                        <a href="#">Home</a>
+                                        <a href="{% url 'authenticate:home' %}">Home</a>
                                     </li>
                                     <li class="navlink">
                                         <a href="#">About<i class="fas fa-caret-down"></i></a>
@@ -130,6 +132,9 @@
                                             </ul>
                                         </div>
                                     </li>
+                                     <li class="navlink">
+                                        <a href="#">My Profile</a>
+                                    </li>
                                     <li class="navlink">
                                         <a href="#">Clubs<i class="fas fa-caret-down"></i></a>
                                         <div class="dropdown">
@@ -147,9 +152,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="navlink">
-                                        <a href="#">Placement</a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -169,14 +172,115 @@
                 </div>
             </div>
             <div class="main">
-                <div class="contenttext">
-                    <div class="pectext">
-                        <p><h3>P</h3>ondicherry Engineering College is an Institution promoted and fully funded by the Government of Puducherry. The College was started in 1984 under the VII Five Year Plan. It is an autonomous Institution for the purposes of administration, staff recruitment and College development and is managed by a Board of Governors. The College is affiliated to Pondicherry University, Pondicherry, for the academic purposes. The College has been growing from strength to strength since its inception. PEC is ranked 122 in Engineering Category by NIRF India Rankings 2020.</p>
+                <div class="content-intro">
+                    
+                </div>
+                <div class="first-service">
+                    <div class="service-div">
+                        <div class="wrapper">
+                            <div class="box" style="background: url({% static 'images/students3.jpg' %}); background-size:cover; background-position: center;">
+                                <div class="front-face">
+                                    <div class="cover-img">                                    
+                                    <span></span>
+                                    </div>
+                                </div>
+                                <div class="back-face">
+                                    <span>Student</span>
+                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
+                               </div>
+                            </div>
+                            <div class="box" style="background: url({% static 'images/classroom1.jpg' %}); background-size:cover; background-position: center;">
+                                <div class="front-face">
+                                    <div class="cover-img">                                    
+                                    <span></span>
+                                    </div>
+                                </div>
+                                <div class="back-face">
+                                    <span>My Classroom</span>
+                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
+                                </div>
+                            </div>
+                            <div class="box" style="background: url({% static 'images/myprofile1.jpg' %}); background-size:cover; background-position: center;">
+                                <div class="front-face">
+                                    <div class="cover-img">                                  
+                                    <span></span>
+                                    </div>
+                                </div>
+                                <div class="back-face">
+                                    <span>MY Profile</span>
+                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="news">
+                <div class="first-service-bottom">
+                </div>
+                <div class="second-service">
+                    <div class="forum-head">
+                        <div class="line1"><div></div></div>
+                        <div class="line2"><div>Join the Community</div></div>
+                        <div class="line3"><div></div></div>
+                    </div>
+                    <div class="forum-content">
+                        <div class="forum-detail">
+                            <div class='detail-heading'>
+                                <h3>Share  Contribute  Develop</h3>
+                            </div>
+                            <p>Your Ideas</p>
+                            <div class="forum-info">
+                                <p>Got stuck at any point in developing your projects? PTU has a large community of students and professors in almost every domain of engineering. MyPTU provides a great environment to interact with your fellow students and help eachother in growing towards their dream.</p>
+                            </div>
+                            <table>
+                                <tr><td>Post your Queries</td><td>Share your ideas and views</td></tr>
+                                <tr><td>Build connections</td><td>Find people with same interest</td></tr>
+                            </table>
+                            <button type="button">
+                                <a href="{% url 'forums:forum' %}">Join the Forum</a>
+                            </button>
+                        </div>
+                        <div class="forum-img">
+                            <div class="forum-cover">
+                                <img src="{% static 'images/connect3.jpeg'%}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="third-service-top">
+                     <div class="forum-head">
+                        <div class="line1"></div>
+                        <div class="line2"><div>Our Features</div></div>
+                        <div class="line3"></div>
+                    </div>
+                    <div class="service-div" style="top:37%;">
+                        <div class="wrapper2">
+                            <div class="lib-box" style="background-image: url({% static 'images/lib2.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                            <div class="lib-box" style="background-image: url({% static 'images/hackathon3.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                            <div class="lib-box" style="margin-right:20px; background-image: url({% static 'images/hackathon2.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                        </div>
+                        <div class="middle-head">
+                        
+                        </div>
+                         <div class="wrapper2">
+                            <div class="lib-box" style="background-image: url('lib2.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                            <div class="lib-box" style="background-image: url('lib1.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                            <div class="lib-box" style="margin-right:20px; background-image: url('lib3.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="third-service-middle">
 
                 </div>
+                <div class="third-service-bottom">
+                        
+                </div>
+                <div class="atal">
+
+                </div>
+            </div>
+            <div id="footer">
+            
             </div>
         </div>
 

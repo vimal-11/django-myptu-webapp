@@ -1,14 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Student Login</title>
-        <link rel="stylesheet" href="loginstyle.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{% static '/css/loginstyle.css' %}">
+
     </head>
     <body>
-         <div class="bg_img">
+         <div class="bg_img" style="background-image: url({% static 'images/login8.jpg' %});">
              <div class="content">
                 <header>Student Login</header>
                 <form action="/login" method="POST">
@@ -30,14 +33,17 @@
                         <a href="#">Forgot Password?</a>
                     </div>
                     <div class="feild">
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
                        <input type="submit" value="LOGIN">
                     </div>
                     <div class="loginwith">Or login with</div>
                     <div class="social">
                         <ul class="icons">
-                            <li><img src="facebook.png"></li>
-                            <li><img src="search.png"></li>
-                            <li><img src="github.png" style="height: 44px; width: 44px; margin-right: 2px;"></li>
+                            <li><img src="{% static 'images/facebook.png'%}"></li>
+                            <li><img src="{% static 'images/search.png'%}"></li>
+                            <li><img src="{% static 'images/github.png'%}" style="height: 44px; width: 44px; margin-right: 2px;"></li>
                         </ul>
                     </div>
                     <div class="signup">

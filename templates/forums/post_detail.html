@@ -1,0 +1,67 @@
+{% extends "forums/base.html" %}
+{% load hitcount_tags %}
+{% block content %}
+        <div class="conatainer">
+            <div class="dir">
+                <span><a href="{% url 'forums:forum' %}">Forum</a> >> <a href="{{ query.categories.all.0.get_url }}">{{ query.categories.all.0 }}</a> >> <a href="{{ query.get_url }}">{{ query.title }}</a></span>
+            </div>
+            <div class="topic">
+                <div class="topic-head">
+                    <div class="postuser">User</div>
+                    <div class="content">{{ query.title }}</div>
+                </div>
+                <div class="topic-body">
+                    <div class="postuser">
+                        <div class="user-img">
+                            <img src="https://cdn.pixabay.com/photo/2014/04/03/10/32/user-310807_960_720.png">
+                        </div>
+                        <div class="user-detail">
+                            <div class="username"><a href="#">{{ query.user.username }}</a></div>
+                            <div><em>Views: {% get_hit_count for query %}</em></div>
+                            <div><em>Points: 200</em></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        {{ query.content | safe }}
+                    </div>
+                </div>
+                <div class = "rply-btn-area">
+                    <div class="rply-btn">
+                        <button type="button" onclick="showReply()">Reply</button>
+                    </div>
+                    <div class="rply-btn">
+                        <button type="button" onclick="showReplies()">View Replies</button>
+                    </div>
+                </div>
+            </div>
+            <form action='.' method='POST'>
+            {% csrf_token %}
+                <div class="reply hide" id="reply-area">
+                    <textarea name="reply" id="" placeholder="share your views"></textarea>
+                    <input type="submit" name="submit_reply" id="" value="Submit">
+                </div>
+            </form>
+            <div class="topic-reply hide" id="post-replies">
+
+                {% for reply in query.replies.all %}       
+                
+                <div class="reply-body">
+                    <div class="postuser">
+                        <div class="user-img">
+                            <img src="https://cdn.pixabay.com/photo/2014/04/03/10/32/user-310807_960_720.png">
+                        </div>
+                        <div class="user-detail">
+                            <div class="username"><a href="#">{{ reply.user.username }}</a></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        {{ reply.reply | safe }}
+                        <br>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+    {% endblock content %}

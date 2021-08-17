@@ -1,0 +1,77 @@
+{% extends "forums/base.html" %}
+{% load hitcount_tags %}
+{% block content %}
+
+    {% if search_box == "title" %}
+    
+    
+        <div class="conatainer">
+            <div class="dir">
+                <span>Results for :  "{{ searched }}"</span>
+            </div>
+            <div class="post-table">
+                <div class="table-head">
+                    <div class="prof-pic">User</div>
+                    <div class="subject">Subject</div>
+                    <div class="replies">Views<span>/ Replies</span></div>
+                    <div class="posted-on">Posted On</div>
+                </div>
+
+                {% for obj in objects %}            
+                <div class="table-row">
+                    <div class="prof-pic"><i class="material-icons">person</i></div>
+                    <div class="subject"><a href="{{ obj.get_url }}">{{ obj.title }}</a>
+                        <br>
+                        <br>
+                        <span> Posted by <b><a href="#">{{ obj.user.username }}</a></b></span>
+                    </div>
+                    <div class="replies">{{ obj.num_rply }} replies | {% get_hit_count for obj %} views</div>
+                    <div class="posted-on">{{ obj.date | date }}</div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    {% elif search_box == "category" %}
+
+        <div class="conatainer">
+            <div class="subforum">
+                <div class="subforum-title">
+                    <h1> Categories</h1>
+                </div>
+
+                {% for obj in objects %}      
+ 
+                <div class="subforum-row">
+                    <div class="subforum-icon subforum-col col-centre">
+                        <i class="material-icons">
+                                person
+                        </i>
+                    </div>
+                    <div class="subforum-des subforum-col">
+                        <h1><a href="{{ obj.get_url }}">
+                        <p> {{obj.title}}</p></a></h1>
+                    </div>
+                    <div class="subforum-stats subforum-col col-centre">
+                        <span>{{ obj.num_queries }} Queries</span>
+                    </div>
+                    <div class="subforum-info subforum-col">
+                        <b><a href="{{obj.last_query.get_url}}">Last Query</a></b> on {{ obj.last_query.date | date }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+                
+
+    {% endif %}
+
+    <!--Pagination-->
+            <div class="pagination">
+                Page: {% for num_page in results.paginator.page_range %} <a href="?search-box={{search_box}}&keyword={{searched}}&page={{num_page}}">{{ num_page }}</a>{% endfor %}
+            
+            </div>            
+
+{% endblock content %}
+

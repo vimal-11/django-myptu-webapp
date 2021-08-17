@@ -1,0 +1,41 @@
+{% extends "forums/base.html" %}
+
+{% block content %}
+
+        <div class="conatainer">
+            <div class="subforum">
+                <div class="subforum-title">
+                    <h1> Categories</h1>
+                </div>
+
+                {% for topic in topics  %}     
+ 
+                <div class="subforum-row">
+                    <div class="subforum-icon subforum-col col-centre">
+                        <i class="material-icons">
+                                person
+                        </i>
+                    </div>
+                    <div class="subforum-des subforum-col">
+                        <h1><a href="{{ topic.get_url }}">
+                        <p> {{topic.title}}</p></a></h1>
+                    </div>
+                    <div class="subforum-stats subforum-col col-centre">
+                        <span>{{ topic.num_queries }} Queries</span>
+                    </div>
+                    <div class="subforum-info subforum-col">
+                        <b><a href="{{topic.last_query.get_url}}">Last Query</a></b> on {{ topic.last_query.date | date }}
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+            <hr class="row-division">
+        </div>
+        <!--Pagination-->
+            <div class="pagination">
+                Page: {% for num_page in topics.paginator.page_range %} <a href="?page={{num_page}}">{{ num_page }}</a>{% endfor %}
+            
+            </div>
+    {% endblock content %}

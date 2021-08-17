@@ -1,0 +1,26 @@
+{% extends "forums/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<style>
+
+.postquery button{
+    display:none;
+}
+
+</style>
+
+    <h1 class="make-q" > Hello <span style="color: #1a73e8;">{{user}}</span>,  <span style="font-size: 18px;">make your query:</span></h1>
+    <div  class="newq-form">
+    <form method="POST" enctype="multipar/form-data">
+    {% csrf_token %}
+        {{ form | crispy }}
+        <div class="post-sub-butn">
+        <input type="submit" value="Post Query" class="post-sub">
+        </div>
+    </form>
+    </div>
+
+{% endblock content %}
