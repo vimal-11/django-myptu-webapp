@@ -40,7 +40,7 @@
                     <button type="button" class="stdbtn">
                         <a href="{% url 'authenticate:login' %}">
                             <span class="stdbtn_txt" style="padding-right: 7px;">Login </span>
-                            <span class="material-icons">
+                            <span class="material-icons iconadj">
                                 account_circle
                             </span>
                         </a>
@@ -133,7 +133,11 @@
                                         </div>
                                     </li>
                                      <li class="navlink">
-                                        <a href="#">My Profile</a>
+                                        {% if request.user.is_authenticated %}
+                                            <a href="{% url 'authenticate:profilepage' request.user.pk %}">My Profile</a>
+                                        {% else %}
+                                            <a href="{% url 'authenticate:login' %}">My Profile</a>
+                                        {% endif %}   
                                     </li>
                                     <li class="navlink">
                                         <a href="#">Clubs<i class="fas fa-caret-down"></i></a>
@@ -173,7 +177,20 @@
             </div>
             <div class="main">
                 <div class="content-intro">
-                    
+                    <div class="content-main">
+                        <div class="intro-text">
+                            <div class='detail-heading'>
+                                <h3>College Begins Here!</h3>
+                            </div>
+                            <p class="home-pg-subttl">Each and every feature of My-PTU is designed in order for you to prepare for the career you want.</p>
+                            <button type="button" class="home-pg-btn">
+                                <a href="{% url 'authenticate:signup' %}">Sign-Up</a>
+                            </button>
+                        </div>
+                        <div class="intro-img">
+                            <img src="{% static "images/connect.png" %}">
+                        </div>
+                    </div>
                 </div>
                 <div class="first-service">
                     <div class="service-div">
@@ -228,7 +245,7 @@
                             <div class='detail-heading'>
                                 <h3>Share  Contribute  Develop</h3>
                             </div>
-                            <p>Your Ideas</p>
+                            <p class="home-pg-subttl">Your Ideas</p>
                             <div class="forum-info">
                                 <p>Got stuck at any point in developing your projects? PTU has a large community of students and professors in almost every domain of engineering. MyPTU provides a great environment to interact with your fellow students and help eachother in growing towards their dream.</p>
                             </div>
@@ -236,7 +253,7 @@
                                 <tr><td>Post your Queries</td><td>Share your ideas and views</td></tr>
                                 <tr><td>Build connections</td><td>Find people with same interest</td></tr>
                             </table>
-                            <button type="button">
+                            <button type="button" class="home-pg-btn">
                                 <a href="{% url 'forums:forum' %}">Join the Forum</a>
                             </button>
                         </div>
@@ -259,13 +276,14 @@
                             <div class="lib-box" style="background-image: url({% static 'images/hackathon3.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
                             <div class="lib-box" style="margin-right:20px; background-image: url({% static 'images/hackathon2.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
                         </div>
-                        <div class="middle-head">
-                        
+                        <div class="middle-head line2">
+                            <div style="color: #f2f2f2">Prepare Your Exams</div>
                         </div>
-                         <div class="wrapper2">
-                            <div class="lib-box" style="background-image: url('lib2.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
-                            <div class="lib-box" style="background-image: url('lib1.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
-                            <div class="lib-box" style="margin-right:20px; background-image: url('lib3.jpg'); background-position: center; background-size: cover;"><div class="overlay"></div></div>
+                         <div class="wrapper3">
+                            <div class="lib-box" style="background-image: url({% static 'images/ptu-logo.png' %}); background-position: center; background-size: 250px 230px;"></div>
+                            <div class="lib-box" style="background-image: url({% static 'images/cat-logo3.png' %}); background-position: center; background-size: cover;"></div>
+                            <div class="lib-box" style="background-image: url({% static 'images/upsc_logo.png' %}); background-position: center; background-size: cover;"></div> 
+                            <div class="lib-box" style="margin-right:20px; background-image: url({% static 'images/gate-logo4.png' %}); background-position: center; background-size: 265px 248px;"></div>
                         </div>
                     </div>
                 </div>

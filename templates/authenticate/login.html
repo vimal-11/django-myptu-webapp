@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,9 +41,9 @@
                     <div class="loginwith">Or login with</div>
                     <div class="social">
                         <ul class="icons">
-                            <li><img src="{% static 'images/facebook.png'%}"></li>
-                            <li><img src="{% static 'images/search.png'%}"></li>
-                            <li><img src="{% static 'images/github.png'%}" style="height: 44px; width: 44px; margin-right: 2px;"></li>
+                            <li><a href="{% provider_login_url "facebook" %}"><img src="{% static 'images/facebook.png'%}"></a></li>
+                            <li><a href="{% provider_login_url "google" %}"><img src="{% static 'images/search.png'%}"></a></li>
+                            <li><a href="{% provider_login_url "github" %}"><img src="{% static 'images/github.png'%}" style="height: 44px; width: 44px; margin-right: 2px;"></a></li>
                         </ul>
                     </div>
                     <div class="signup">
