@@ -25,6 +25,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
     path('accounts/', include('allauth.urls')),
+    path('chat/', include('chat.urls', namespace='chat')),
 ]
 
 
