@@ -1,0 +1,14 @@
+{% extends "exams/base.html" %}
+
+{% block content %}
+    <h2>Previos Years Question Papers: Year {{year}}</h2><br>
+        {% for k, l in category %}
+            <br>
+            <h3>{{k.phase}}</h3>
+            {% for c in l %}
+                <p>{{c.category}}: <a href="{{c.link}}">{{c.subject}}</a></p>
+            {% endfor %}
+        {% endfor %}
+        
+
+{% endblock content %}

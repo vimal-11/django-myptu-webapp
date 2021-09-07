@@ -1,0 +1,12 @@
+{% extends "exams/base.html" %}
+
+{% block content %}
+
+        
+            <h1>{{ field }}</h1><br><br>
+            <h3>Previos Years Question Papers</h3><br>
+                {% for k in pyqs %}
+                    <h1><a href = "{% url 'exams:pyqs' exam_slug=field.exam.slug field_slug=field.slug year_slug=k.year_slug %}">{{k.year}}</a></h1>
+                {% endfor %}
+
+{% endblock content %}
