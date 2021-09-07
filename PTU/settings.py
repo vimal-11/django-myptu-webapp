@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'authenticate.apps.AuthenticateConfig',
     'forums.apps.ForumsConfig',
     'chat.apps.ChatConfig',
+    'exams.apps.ExamsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
