@@ -4,3 +4,4 @@ db.sqlite3
 static/css/chat.css
 *.log
 **/__pycache__
+*.pyc
