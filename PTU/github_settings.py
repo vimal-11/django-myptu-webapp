@@ -1,4 +1,4 @@
-# Copy this file to github_settings.py (don't check it into github)
+# Copy this file to github_settings.py (don't check it into github)  #jhyf
 
 # Go to https://github.com/settings/developers
 
