@@ -1,7 +1,8 @@
-PTU/info.py
-PTU/github_settings.py
-db.sqlite3
-static/css/chat.css
-*.log
-**/__pycache__
 *.pyc
+*.sqlite
+*.sqlite3
+*.log
+PTU/info2.py
+PTU/info.py
+static/css/chatapp.css
+*/__pycache__

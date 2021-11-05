@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from . info import *
+from . info2 import *
 import os
 from django.contrib.messages import constants as messages
 
