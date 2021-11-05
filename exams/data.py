@@ -1,4 +1,4 @@
-from .models import Exam, Exam_Detail, Pyqs
+from .models import Exam, Exam_Detail, Gate_Syllabus, Pyqs
 import json
 
 class UPSC():
@@ -98,4 +98,54 @@ class UPSC():
     for k in files2:
         upsc_cat(k[0], k[1])
 
-    
+
+
+class GATE():
+    def gatepyq():
+        Exam_Detail.objects.get_or_create(field = 'GATE Official',
+                                          reg_link = 'https://gate.iitkgp.ac.in/apps.html' 
+                                        )
+        file = open('exams/datafiles/gatepyqs.txt', 'r')
+        hand = file.read()
+        hand = json.loads(hand)
+        for k in hand:
+            year = k
+            print(year)
+            for a in range(len(hand[k])):
+                subject = hand[k][a]['subject']
+                qpaper = hand[k][a]['question paper']
+                if len(hand[k][a])>2:
+                    akey = hand[k][a]['answer key']
+                else:
+                    akey = None
+                if subject is not None and qpaper is not None:
+                    Pyqs.objects.get_or_create(
+                                exam = Exam.objects.get(exam = 'GATE'),
+                                exam_field = Exam_Detail.objects.get(field = 'GATE Official'),
+                                year = year,
+                                subject = subject,
+                                question_link = qpaper,
+                                answer_link = akey
+                            )
+                print(subject, qpaper, akey)
+        file.close()
+        Pyqs.save
+        Exam_Detail.save
+        Exam.save
+
+    def gatesyl():
+        file = open('exams/datafiles/gatesyll.txt', 'r')
+        hand = file.read()
+        hand = json.loads(hand)
+        for k in hand:
+            field = k
+            syl = hand[k]
+            Gate_Syllabus.objects.get_or_create(
+                year = '2022',
+                gate_paper = field,
+                syllabus = syl 
+            )
+            print(field, syl)
+
+        file.close()
+        Gate_Syllabus.save

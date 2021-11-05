@@ -1,19 +1,23 @@
 from django.db.models import fields
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Exam, Exam_Detail, Pyqs
+from .models import Exam, Exam_Detail, Gate_Syllabus, Pyqs
 #from . import data
 
 def exam(request, slug):
     exam = get_object_or_404(Exam, slug=slug)
     fields = Exam_Detail.objects.filter(exam = exam)
-    context = {'fields': fields, 'exam': exam}
-    return render (request, 'exams/upsc.html', context)
+    if slug == 'gate' :
+        syllabus = Gate_Syllabus.objects.all().values()
+    else:
+        syllabus = None
+    context = {'fields': fields, 'exam': exam, 'gate_syllabus': syllabus}
+    return render (request, 'exams/exam.html', context)
 
 
-
-'''def examupdate(request):
-    update = data.UPSC()
+'''
+def examupdate(request):
+    update = data.GATE.gatesyl()
     return redirect('http://127.0.0.1:8000/admin/exams')'''
     
 
@@ -55,12 +59,12 @@ def pyqs(request, exam_slug, field_slug, year_slug):
                 for p in obj[obj.index(k)+1:]:
                     if p == c:
                         obj.remove(p)
-    print(obj, len(obj))
+    #print(obj, len(obj))
     cag = []
     for k in obj:
         catg = objs.filter(phase = k['phase'])
-        cat = list((catg).values('category', 'subject', 'link'))
-        print(cat, len(cat))
+        cat = list((catg).values('category', 'subject', 'question_link', 'answer_link'))
+        #print(cat, len(cat))
         cag.append(cat)
     zip_obj = zip(obj, cag)
     context = {

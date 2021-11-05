@@ -1,9 +1,0 @@
-{% extends "exams/base.html" %}
-
-{% block content %}
-
-        {% for field in fields %}
-            <p><a href="{{field.get_url}}">{{field}}</a></p>
-        {% endfor %}
-
-{% endblock content %}

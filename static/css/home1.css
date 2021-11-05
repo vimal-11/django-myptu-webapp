@@ -189,7 +189,6 @@ header{
 .container{
     max-width: 80rem;
     padding: 0 2rem;
-    border: 2px solid yellow;
     height: 3rem;
     margin: 0 auto;
     display: flex;
@@ -202,7 +201,6 @@ header{
 .nav-btn{
     font-family: 'Poppins', sans-serif;
     flex: 5;
-    border: 2px solid green;
 }
 
 .nav-links > ul{

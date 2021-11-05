@@ -55,12 +55,13 @@ class Exam_Detail(models.Model):
 class Pyqs(models.Model):
     exam = models.ForeignKey('Exam', on_delete=models.CASCADE)
     exam_field = models.ForeignKey('Exam_Detail', on_delete=models.CASCADE)
-    phase = models.CharField(max_length=300)
+    phase = models.CharField(max_length=300, blank=True, null=True)
     year = models.IntegerField(null=True)
     year_slug = models.SlugField(max_length=4)
     category = models.CharField(max_length=300, blank=True, null=True)
     subject = models.CharField(max_length=100)
-    link = models.URLField(unique=True)
+    question_link = models.URLField()
+    answer_link = models.URLField(blank=True, null=True)
 
     def get_url(self):
         return reverse("exams:pyqs", kwargs={
@@ -75,6 +76,15 @@ class Pyqs(models.Model):
         super(Pyqs, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.phase
-
+        if self.phase is not None:
+            return self.phase
+        else:
+            return self.subject
     
+class Gate_Syllabus(models.Model):
+    year = models.IntegerField(null=True)
+    gate_paper = models.CharField(max_length=100)
+    syllabus = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.gate_paper

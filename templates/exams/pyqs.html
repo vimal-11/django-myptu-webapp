@@ -4,10 +4,36 @@
     <h2>Previos Years Question Papers: Year {{year}}</h2><br>
         {% for k, l in category %}
             <br>
-            <h3>{{k.phase}}</h3>
-            {% for c in l %}
-                <p>{{c.category}}: <a href="{{c.link}}">{{c.subject}}</a></p>
-            {% endfor %}
+            {% if k.phase is not None %}
+                <h3>{{k.phase}}</h3>
+            {% endif %}
+            <table>
+                <tbody>
+                {% for c in l %}
+                    {% if c.category is not None %}
+                        <tr>
+                            <td>{{c.category}}</td> 
+                            <td>{{c.subject}}</td>  
+                            <td><a href="{{c.question_link}}">Click Here</a></td>
+                        </tr>
+                    {% else %}   
+                        {% if c.answer_link is not None %}
+                            <tr>
+                                <td>{{c.subject}}</td>  
+                                <td><a href="{{c.question_link}}">Click Here</a></td>
+                                <td><a href="{{c.answer_link}}">Answer Key</a></td>
+                            </tr>
+                            
+                        {% else %}
+                            <tr>
+                                <td>{{c.subject}}</td>  
+                                <td><a href="{{c.question_link}}">Click Here</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
         {% endfor %}
         
 

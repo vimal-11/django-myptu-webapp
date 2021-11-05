@@ -1,0 +1,27 @@
+{% extends "exams/base.html" %}
+
+{% block content %}
+
+        {% for field in fields %}
+            <p><a href="{{field.get_url}}">{{field}}</a></p>
+        {% endfor %}
+        <br>
+        {% if gate_syllabus is not None %}
+            <table>
+                <thead>
+                    <tr>
+                        <td>Field</td>
+                        <td>Syllabus</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in gate_syllabus %}
+                        <tr>
+                            <td>{{s.gate_paper}}</td>
+                            <td><a href='{{s.syllabus}}'>Click Here</a></td>
+                        </tr>
+                    {% endfor %}
+               </tbody>
+            </table>
+        {% endif %}
+{% endblock content %}
