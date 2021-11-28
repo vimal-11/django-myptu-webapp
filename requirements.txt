@@ -23,7 +23,9 @@ django-tinymce==3.3.0
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.2
+importlib-metadata==4.8.2
 incremental==21.3.0
+Markdown==3.3.6
 msgpack==1.0.2
 oauthlib==3.1.1
 pyasn1==0.4.8
@@ -45,4 +47,5 @@ twisted-iocpsupport==1.0.1
 txaio==21.2.1
 typing-extensions==3.10.0.1
 urllib3==1.26.6
+zipp==3.6.0
 zope.interface==5.4.0
