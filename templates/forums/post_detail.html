@@ -1,5 +1,6 @@
 {% extends "forums/base.html" %}
 {% load hitcount_tags %}
+{% load forum_extras %}
 {% block content %}
         <div class="conatainer">
             <div class="dir">
@@ -22,7 +23,7 @@
                         </div>
                     </div>
                     <div class="content">
-                        {{ query.content | safe }}
+                        {{ query.content| convert_markdown | safe }}
                     </div>
                 </div>
                 <div class = "rply-btn-area">
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                     <div class="content">
-                        {{ reply.reply | safe }}
+                        {{ reply.reply | convert_markdown | safe }}
                         <br>
                     </div>
                 </div>
