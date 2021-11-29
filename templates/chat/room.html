@@ -10,7 +10,7 @@
             {% if chat.author.id == request.user.id %}
                 <p style="color:blue;">{{chat.author}}: {{ chat.msg_content }}</p>
             {% else %}
-                <div>{{chat.author}}: {{ chat.msg_content }}</div>
+                <p>{{chat.author}}: {{ chat.msg_content }}</p>
             {% endif %}
         {% endfor %}
     </textarea><br>
