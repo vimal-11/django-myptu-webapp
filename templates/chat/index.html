@@ -1,4 +1,4 @@
-<!-- templates/chat/index.html -->
+<!-- templates/chat/index.html   window.location.pathname = 'chat/' + roomName + '/';-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,12 @@
     What chat room would you like to enter?<br>
     <input id="room-name-input" type="text" size="100"><br>
     <input id="room-name-submit" type="button" value="Enter">
+    {% for room in rooms %}
+    <ul>
+        <li><a href="{% url 'chat:room' room.room %}">{{room.room}}</a></li>
+    </ul>
+    {% endfor %}
+    
 
     <script>
         document.querySelector('#room-name-input').focus();
@@ -20,7 +26,7 @@
 
         document.querySelector('#room-name-submit').onclick = function(e) {
             var roomName = document.querySelector('#room-name-input').value;
-           window.location.pathname = 'chat/' + roomName + '/';
+            window.location.pathname = 'chat/' + roomName + '/';
         };
     </script>
 </body>
