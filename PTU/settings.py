@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tinymce',
     'hitcount',
-    "taggit", 
+    "taggit",
+    "ckeditor", 
    
 ]
 
