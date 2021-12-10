@@ -8,4 +8,3 @@ static/css/chatapp.css
 exams/datafiles/Upsc
 *.rar
 */__pycache__
-*/migrations
