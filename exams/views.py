@@ -6,9 +6,12 @@ from .models import Exam, Exam_Detail, Gate_Syllabus, Pyqs
 
 def exam(request, slug):
     exam = get_object_or_404(Exam, slug=slug)
+    print(exam)
     fields = Exam_Detail.objects.filter(exam = exam)
     if slug == 'gate' :
         syllabus = Gate_Syllabus.objects.all().values()
+    elif slug == 'cat':
+        return redirect("exams:exam_detail", exam_slug = slug, field_slug = slug)
     else:
         syllabus = None
     context = {'fields': fields, 'exam': exam, 'gate_syllabus': syllabus}
