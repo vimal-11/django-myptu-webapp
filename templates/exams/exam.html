@@ -2,6 +2,9 @@
 
 {% block content %}
 
+        {% if exam %}
+          <p>CAThi</p>
+        {% endif %}
         {% for field in fields %}
             <p><a href="{{field.get_url}}">{{field}}</a></p>
         {% endfor %}
