@@ -22,8 +22,10 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
+
 def home(request):
     return render(request, "authenticate/home.html")
+
 
 def signup(request):
 
@@ -37,7 +39,8 @@ def signup(request):
             last_name = form.cleaned_data.get('last_name')
             form.save()
 
-            new_user = User.objects.create_user(username=username, email=email, password=password)
+            new_user = User.objects.create_user(
+                username=username, email=email, password=password)
             new_user.first_name = first_name
             new_user.last_name = last_name
             new_user.is_active = False
@@ -45,20 +48,19 @@ def signup(request):
             new_user.save()
 
             messages.success(request, 'Registered Successfully!')
-            
-           
-            #Confirmation mail
+
+            # Confirmation mail
 
             current_site = get_current_site(request)
             email_subject = "MYPTU - Confirmation Mail!"
-            message = render_to_string('email_confirmation.html',{
-                    'name': new_user.first_name,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                    'token': generate_token.make_token(new_user)
+            message = render_to_string('email_confirmation.html', {
+                'name': new_user.first_name,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                'token': generate_token.make_token(new_user)
             })
             email = EmailMessage(
-                email_subject, 
+                email_subject,
                 message,
                 settings.EMAIL_HOST_USER,
                 [new_user.email],
@@ -68,51 +70,52 @@ def signup(request):
 
             return render(request, 'authenticate/index.html', {'name': new_user.first_name})
     else:
-            form = UserRegisterForm()
+        form = UserRegisterForm()
 
     return render(request, 'authenticate/signup.html', {'form': form})
 
-        
-    
+
 def loginUser(request):
 
     if request.method == 'POST':
-        username = request.POST['username'] 
+        username = request.POST['username']
         pass1 = request.POST['password']
         #print(username,type(username), pass1, type(pass1) )
         if "@" in username:
             user_cred = User.objects.get(email=username.lower()).username
         else:
             user_cred = username
-    
+
         user = authenticate(request, username=user_cred, password=pass1)
-        
+
         print(user, type(user))
-        
+
         if user is not None:
             login(request, user)
             fname = user.first_name
 
             if 'next' in request.POST:
-                return redirect(request.POST.get('next')) 
+                return redirect(request.POST.get('next'))
             else:
                 return redirect('authenticate:profilepage', pk=user.pk)
         else:
             messages.error(request, "Bad Credentials!")
             return redirect('authenticate:home')
 
-
     return render(request, 'authenticate/login.html')
-    
+
+
 @login_required
 def logoutUser(request):
-    #if request.method == 'POST':
+    # if request.method == 'POST':
     logout(request)
     return redirect('authenticate:home')
-    #return redirect('authenticate:login')
+    # return redirect('authenticate:login')
+
 
 def index(request):
     return render(request, 'authenticate/index.html')
+
 
 def activate(request, uidb64, token):
     try:
@@ -138,4 +141,3 @@ class profile_view(LoginRequiredMixin, View):
             user = request.user
         args = {'name': user.first_name}
         return render(request, 'authenticate/profilepage.html', args)
-    

@@ -29,7 +29,7 @@ def exam_detail(request, exam_slug, field_slug):
         exam_match = Exam.objects.get(slug = exam_slug)
         fields = [k.slug for k in Exam_Detail.objects.filter(exam = exam_match)]
         if field_slug in fields:
-            field_match = Exam_Detail.objects.filter(slug = field_slug).values_list('id', 'field')
+            field_match = Exam_Detail.objects.filter(slug = field_slug).values_list('id','field')
             field = get_object_or_404(Exam_Detail, slug=field_slug)
             pyq = list(Pyqs.objects.filter(exam_field = field).values('year', 'year_slug'))
             for k in pyq:
@@ -73,3 +73,4 @@ def pyqs(request, exam_slug, field_slug, year_slug):
         'year': year_slug
         }
     return render (request, 'exams/pyqs.html', context)
+    
