@@ -1,10 +1,27 @@
 from django.http.response import HttpResponseServerError
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import FriendRequest
 import json
 
 # Create your views here.
+
+def friend_requests(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        user_id = kwargs.get("user_id")
+        print("User id: ", user_id)
+        account = User.objects.get(pk=user_id)
+        if account == user:
+            friend_requests = FriendRequest.objects.filter(receiver=account, is_active=True)
+            context['friend_requests'] = friend_requests
+        else:
+            return HttpResponse("You can't view another users friend requets.")
+    else:
+        redirect("authenticate:login")
+    return render(request, "friend/friend_requests.html", context)
 
 def send_friend_request(request, *args, **kwargs):
 	user = request.user
