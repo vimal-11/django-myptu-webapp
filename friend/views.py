@@ -1,6 +1,7 @@
 from django.http.response import HttpResponseServerError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
 from .models import FriendList, FriendRequest
 import json
@@ -65,6 +66,7 @@ def send_friend_request(request, *args, **kwargs):
 			try:
 				# Get any friend requests (active and not-active)
 				friend_requests = FriendRequest.objects.filter(sender=user, receiver=receiver)
+				print("check 1-----------")
 				# find if any of them are active (pending)
 				try:
 					for request in friend_requests:
@@ -73,6 +75,7 @@ def send_friend_request(request, *args, **kwargs):
 					# If none are active create a new friend request
 					friend_request = FriendRequest(sender=user, receiver=receiver)
 					friend_request.save()
+					print("check 2-----------")
 					payload['response'] = "Friend request sent."
 				except Exception as e:
 					payload['response'] = str(e)
@@ -80,6 +83,7 @@ def send_friend_request(request, *args, **kwargs):
 				# There are no friend requests so create one.
 				friend_request = FriendRequest(sender=user, receiver=receiver)
 				friend_request.save()
+				print("check 3----------------")
 				payload['response'] = "Friend request sent."
 
 			if payload['response'] == None:
@@ -88,6 +92,7 @@ def send_friend_request(request, *args, **kwargs):
 			payload['response'] = "Unable to sent a friend request."
 	else:
 		payload['response'] = "You must be authenticated to send a friend request."
+	print(f"send req: {payload}, user={user}, receiver={receiver}")
 	return HttpResponseServerError(json.dumps(payload), content_type="application/json")
 
 
@@ -99,6 +104,7 @@ def accept_friend_request(request, *args, **kwargs):
 		if friend_request_id:
 			friend_request = FriendRequest.objects.get(pk=friend_request_id)
 			# confirm that is the correct request
+			print(f"frnd accept: {friend_request}, {friend_request_id}, {friend_request.receiver}")
 			if friend_request.receiver == user:
 				if friend_request: 
 					# found the request. Now accept it
@@ -114,10 +120,12 @@ def accept_friend_request(request, *args, **kwargs):
 	else:
 		# should never happen
 		payload['response'] = "You must be authenticated to accept a friend request."
+	print(f"accept_friend {payload}")
 	return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
 def remove_friend(request, *args, **kwargs):
+	"""fine"""
 	user = request.user
 	payload = {}
 	if request.method == "POST" and user.is_authenticated:
@@ -135,6 +143,7 @@ def remove_friend(request, *args, **kwargs):
 	else:
 		# should never happen
 		payload['response'] = "You must be authenticated to remove a friend."
+	print(f"remove_friend {payload}, {removee}")
 	return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
@@ -164,6 +173,7 @@ def decline_friend_request(request, *args, **kwargs):
 
 
 def cancel_friend_request(request, *args, **kwargs):
+	"""fine"""
 	user = request.user
 	payload = {}
 	if request.method == "POST" and user.is_authenticated:
@@ -189,4 +199,5 @@ def cancel_friend_request(request, *args, **kwargs):
 	else:
 		# should never happen
 		payload['response'] = "You must be authenticated to cancel a friend request."
+	print(f"cancel: {payload}, {user_id} ")
 	return HttpResponse(json.dumps(payload), content_type="application/json")

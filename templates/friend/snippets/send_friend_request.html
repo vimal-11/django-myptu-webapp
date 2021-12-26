@@ -5,6 +5,7 @@
 			"csrfmiddlewaretoken": "{{ csrf_token }}",
 			"receiver_user_id": id,
 		}
+		console.log("info", payload)
 		$.ajax({
 			type: 'POST',
 			dataType: "json",
