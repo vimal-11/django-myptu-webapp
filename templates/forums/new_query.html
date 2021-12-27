@@ -16,6 +16,7 @@
     <div  class="newq-form">
     <form method="POST" enctype="multipar/form-data">
     {% csrf_token %}
+        {{ form.media }}
         {{ form | crispy }}
         <div class="post-sub-butn">
         <input type="submit" value="Post Query" class="post-sub">

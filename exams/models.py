@@ -32,8 +32,9 @@ class Exam_Detail(models.Model):
     field = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     reg_link = models.URLField(blank=True)
-    syllabus = HTMLField(blank=True)
+    exam_content = models.CharField(max_length=10000000, blank=True)
     important_dates = HTMLField(blank=True)
+    syllabus = models.CharField(blank=True, max_length=150)
 
     def __str__(self):
         return self.field
