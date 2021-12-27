@@ -6,5 +6,6 @@ PTU/info2.py
 PTU/info.py
 static/css/chatapp.css
 exams/datafiles/Upsc
+friend/models2.py
 *.rar
 */__pycache__

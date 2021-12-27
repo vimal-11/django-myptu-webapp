@@ -1,27 +1,164 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>Hello {{ name }}!</h1>
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+{% block content %}
+    
+        <h1>Hello {{ username }}!</h1>
         <h3>You are successfuly logged in</h3>
         <nav>
             <ul>
                 <li>
-                    <form class='logout-link' action='{% url 'authenticate:logout' %}' method="POST">
+                    <form class='logout-link' action="{% url 'authenticate:logout' %}" method="POST">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
                 </li>
             </ul>
         </nav>
-        <button><a href='{% url 'chat:chatindex' %}'> MyChat </a></button>
-        <script src="" async defer></script>
-    </body>
-</html>
+        <button><a href="{% url 'chat:chatindex' %}"> MyChat </a></button>
+
+        <!--Friend System-->
+
+        {% if request.user.is_authenticated %}
+		<div class="d-flex flex-column mb-4">
+
+			<!-- THEM to YOU -->
+			{% if request_sent == 0 %}
+			<div class="card m-2 p-4">
+				<div class="d-flex flex-row align-items-center">
+					<span class="friend-text align-items-center mr-2">Accept Friend Request</span>
+					<span id="id_cancel_{{id}}" class="decline-friend-request material-icons p-1" onclick='triggerDeclineFriendRequest("{{pending_friend_request_id}}")'>cancel</span>
+  					<span id="id_confirm_{{id}}" class="confirm-friend-request material-icons p-1" onclick='triggerAcceptFriendRequest("{{pending_friend_request_id}}")'>check</span>
+				</div>
+			</div>
+			{% endif %}
+
+			<div class="card m-2 px-4 pb-4">
+				<!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
+				{% if is_friend == False and is_self == False %}
+						<!-- You sent them a request -->
+						{% if request_sent == 1 %}
+						<div class="d-flex flex-column align-items-center pt-4">
+							<button class="btn btn-danger" id="id_cancel_friend_request_btn">
+								Cancel Friend Request
+							</button>
+						</div>
+						{% endif %}
+						<!-- No requests have been sent -->
+						{% if request_sent == -1 %}
+						<div class="d-flex flex-column align-items-center pt-4">
+							<button class="btn btn-primary" id="id_send_friend_request_btn">
+								Send Friend Request
+							</button>
+						</div>
+						{% endif %}
+				{% endif %}
+					
+					
+				{% if is_friend %}
+					<div class="dropdown pt-4 m-auto">
+						<button class="btn btn-secondary dropdown-toggle friends-btn" type="button" id="id_friends_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Friends
+						</button>
+						<div class="dropdown-menu" aria-labelledby="id_friends_toggle">
+							<a class="dropdown-item" href="#" onclick="removeFriend('{{id}}', onFriendRemoved)">Unfriend</a>
+						</div>
+					</div>
+				{% endif %}
+				
+				<!-- Friend list link -->
+		  		<div class="d-flex flex-column pt-4">
+					<!--" url 'friend:list' user_id=id " -->
+						<a href="{% url 'friend:list' user_id=id %}">
+						<div class="d-flex flex-row align-items-center justify-content-center icon-container">
+							<span class="material-icons mr-2 friends-icon">contact_page</span><br><span class="friend-text">Friends ({{friends|length}})</span>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+			{% if friend_requests %}
+			<div class="card m-2 px-4 pb-4">
+				<!-- Friend requests -->
+		  		<div class="d-flex flex-column pt-4">
+					<a href="{% url 'friend:friend-requests' user_id=id %}">
+						<div class="d-flex flex-row align-items-center justify-content-center icon-container">
+							<span class="material-icons mr-2 person-add-icon">person_add</span><span class="friend-text">Friend Requests ({{friend_requests|length}})</span>
+						</div>
+					</a>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if is_friend %}
+				<div class="d-flex flex-row align-items-center btn btn-primary m-2 px-4" onclick="createOrReturnPrivateChat('{{id}}')">
+					<span class="material-icons m-auto">
+					message
+					</span>
+					<span class="message-btn-text m-auto pl-2">Message</span>
+				</div>
+			{% endif %}
+
+		</div>
+		{% endif %}
+
+        <script type="text/javascript">
+
+            function onFriendRequestSent(){
+                location.reload();
+            }
+
+            function onFriendRequestCancelled(){
+                location.reload();
+            }
+
+            function onFriendRemoved(){
+                location.reload();
+            }
+
+            function onFriendRequestAccepted(){
+                location.reload();
+            }
+
+            function onFriendRequestDeclined(){
+                location.reload();
+            }
+
+            var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
+            if (sendFriendRequestBtn != null){
+                sendFriendRequestBtn.addEventListener("click", function(){
+                    sendFriendRequest("{{id}}", onFriendRequestSent)
+                })
+            }
+
+            var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+            if(cancelFriendRequestBtn != null){
+                cancelFriendRequestBtn.addEventListener("click", function(){
+                    cancelFriendRequest("{{id}}", onFriendRequestCancelled)
+                })
+            }
+
+            var removeFriendBtn = document.getElementById("id_unfriend_btn")
+            if (removeFriendBtn != null){
+                removeFriendBtn.addEventListener("click", function(){
+                    removeFriend("{{id}}", onFriendRemoved)
+                })
+            }
+
+            function triggerAcceptFriendRequest(friend_request_id){
+                acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+            }
+
+            function triggerDeclineFriendRequest(friend_request_id){
+		        declineFriendRequest(friend_request_id, onFriendRequestDeclined)
+	        }
+            
+        </script>
+		{% include 'friend/snippets/send_friend_request.html' %}
+		{% include 'friend/snippets/accept_friend_request.html' %}
+		{% include 'friend/snippets/remove_friend.html' %}
+		{% include 'friend/snippets/decline_friend_request.html' %}
+		{% include 'friend/snippets/cancel_friend_request.html' %}
+ 
+	{% endblock content %}
