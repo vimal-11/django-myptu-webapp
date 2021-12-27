@@ -81,7 +81,6 @@ def friend_requests(request, *args, **kwargs):
 	user = request.user
 	if user.is_authenticated:
 		user_id = kwargs.get("user_id")
-		print("User id: ", user_id)
 		account = User.objects.get(pk=user_id)
 		if account == user:
 			friend_requests = FriendRequest.objects.filter(receiver=account, 
