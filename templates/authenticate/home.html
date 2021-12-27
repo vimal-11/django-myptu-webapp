@@ -2,283 +2,318 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PTU</title>
-        <link rel="stylesheet" href="{% static '/css/home1.css' %}">
-        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-        <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="homepage">
-            <div class="head">
-                <div class="logo">
-                    <a href="home.html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTU</title>
+    <link rel="stylesheet" href="{% static '/css/home1.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="homepage">
+        <div class="head">
+            <div class="logo">
+                <a href="home.html">
                     <img src="PEC_logo.png">
+                </a>
+            </div>
+            <div class="title">
+                PTU
+            </div>
+            <div class="stdprofile">
+                <div class="searchcontainer">
+                    <table class="searchbox">
+                        <tr>
+                            <td>
+                                <input type="text" placeholder="Search" class="search">
+                            </td>
+                            <td>
+                                <a href="#"><span class="material-icons">search</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="button" class="stdbtn">
+                    <a href="{% url 'authenticate:login' %}">
+                        <span class="stdbtn_txt" style="padding-right: 7px;">Login </span>
+                        <span class="material-icons iconadj">
+                            account_circle
+                        </span>
                     </a>
+                </button>
+            </div>
+        </div>
+        <div class="wholebg">
+            <header>
+                <div class="title-container">
+                    <h2>My<span class="bold">PTU</span></h2>
                 </div>
-                <div class="title">
-                    PTU
+                <div class="container">
+                    <div class="logo-container"></div>
+                    <div class="nav-btn">
+                        <div class="nav-links">
+                            <ul>
+                                <li class="navlink">
+                                    <a href="{% url 'authenticate:home' %}">Home</a>
+                                </li>
+                                <li class="navlink">
+                                    <a href="#">About<i class="fas fa-caret-down"></i></a>
+                                    <div class="dropdown">
+                                        <ul>
+                                            <li class="dropdown-link">
+                                                <a href="#">About-PTU<i class="fas fa-caret-down"></i></a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Campus life</p></a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Hostel</a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Library</a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Sports</a>
+                                            </li>
+                                            <div class="arrow"></div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="navlink">
+                                    <a href="#">Departments<i class="fas fa-caret-down"></i></a>
+                                    <div class="dropdown">
+                                        <ul>
+                                            <li class="dropdown-link">
+                                                <a href="#">Engineering<i class="fas fa-caret-down"></i></a>
+                                                <div class="dropdown2">
+                                                    <ul>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Computer Science</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Information Technology</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Electronics & Communication</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Electrical & Electronics</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Mechatronics</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Mechanical</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Chemical</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Civil</a>
+                                                        </li>
+                                                        <li class="dropdown-link">
+                                                            <a href="#">Instrumentation</a>
+                                                        </li>
+                                                        <div class="arrow"></div>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Science<i class="fas fa-caret-down"></i></a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">Research<i class="fas fa-caret-down"></i></a>
+                                            </li>
+                                            <div class="arrow"></div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="navlink">
+                                    {% if request.user.is_authenticated %}
+                                    <a href="{% url 'authenticate:profilepage' request.user.pk %}">My Profile</a>
+                                    {% else %}
+                                    <a href="{% url 'authenticate:login' %}">My Profile</a>
+                                    {% endif %}
+                                </li>
+                                <li class="navlink">
+                                    <a href="#">Clubs<i class="fas fa-caret-down"></i></a>
+                                    <div class="dropdown">
+                                        <ul>
+                                            <li class="dropdown-link">
+                                                <a href="#">NCC</a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">NSS</a>
+                                            </li>
+                                            <li class="dropdown-link">
+                                                <a href="#">DSC</a>
+                                            </li>
+                                            <div class="arrow"></div>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="stdprofile">
-                    <div class="searchcontainer">
-                        <table class="searchbox">
+            </header>
+            <div class="introimg">
+                <div class="ptufull">
+                    <div class="title1">
+                        <a href="http://www.pec.edu/" style="text-decoration: none;">
+                            <h1>PUDUCHEERY TECHNOLOGICAL UNIVERSITY</h1>
+                        </a>
+                    </div>
+                    <div class="subtitle">
+                        <h3>(A Technological University of Government of Puducherry)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="content-intro">
+                <div class="content-main">
+                    <div class="intro-text">
+                        <div class='detail-heading'>
+                            <h3>College Begins Here!</h3>
+                        </div>
+                        <p class="home-pg-subttl">Each and every feature of My-PTU is designed in order for you to
+                            prepare for the career you want.</p>
+                        <button type="button" class="home-pg-btn">
+                            <a href="{% url 'authenticate:signup' %}">Sign-Up</a>
+                        </button>
+                    </div>
+                    <div class="intro-img">
+                        <img src="{% static " images/connect.png" %}">
+                    </div>
+                </div>
+            </div>
+            <div class="first-service">
+                <div class="service-div">
+                    <div class="wrapper">
+                        <div class="box"
+                            style="background: url({% static 'images/students3.jpg' %}); background-size:cover; background-position: center;">
+                            <div class="front-face">
+                                <div class="cover-img">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="back-face">
+                                <span>Student</span>
+                                <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc liubgv kugh;zv
+                                    ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb vimal kubgugsv</p>
+                            </div>
+                        </div>
+                        <div class="box"
+                            style="background: url({% static 'images/classroom1.jpg' %}); background-size:cover; background-position: center;">
+                            <div class="front-face">
+                                <div class="cover-img">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="back-face">
+                                <span>My Classroom</span>
+                                <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc liubgv kugh;zv
+                                    ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb vimal kubgugsv</p>
+                            </div>
+                        </div>
+                        <div class="box"
+                            style="background: url({% static 'images/myprofile1.jpg' %}); background-size:cover; background-position: center;">
+                            <div class="front-face">
+                                <div class="cover-img">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="back-face">
+                                <span>MY Profile</span>
+                                <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc liubgv kugh;zv
+                                    ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb vimal kubgugsv</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="first-service-bottom">
+            </div>
+            <div class="second-service">
+                <div class="forum-head">
+                    <div class="line1">
+                        <div></div>
+                    </div>
+                    <div class="line2">
+                        <div>Join the Community</div>
+                    </div>
+                    <div class="line3">
+                        <div></div>
+                    </div>
+                </div>
+                <div class="forum-content">
+                    <div class="forum-detail">
+                        <div class='detail-heading'>
+                            <h3>Share Contribute Develop</h3>
+                        </div>
+                        <p class="home-pg-subttl">Your Ideas</p>
+                        <div class="forum-info">
+                            <p>Got stuck at any point in developing your projects? PTU has a large community of students
+                                and professors in almost every domain of engineering. MyPTU provides a great environment
+                                to interact with your fellow students and help eachother in growing towards their dream.
+                            </p>
+                        </div>
+                        <table>
                             <tr>
-                                <td>
-                                    <input type="text" placeholder="Search" class="search">
-                                </td>
-                                <td>
-                                    <a href="#"><span class="material-icons">search</span>
-                                    </a>
-                                </td>
+                                <td>Post your Queries</td>
+                                <td>Share your ideas and views</td>
+                            </tr>
+                            <tr>
+                                <td>Build connections</td>
+                                <td>Find people with same interest</td>
                             </tr>
                         </table>
+                        <button type="button" class="home-pg-btn">
+                            <a href="{% url 'forums:forum' %}">Join the Forum</a>
+                        </button>
                     </div>
-                    <button type="button" class="stdbtn">
-                        <a href="{% url 'authenticate:login' %}">
-                            <span class="stdbtn_txt" style="padding-right: 7px;">Login </span>
-                            <span class="material-icons iconadj">
-                                account_circle
-                            </span>
-                        </a>
-                    </button>
-                </div>
-            </div>
-            <div class="wholebg">
-                <header>
-                    <div class="title-container">
-                        <h2>My<span class="bold">PTU</span></h2>
-                    </div>
-                    <div class="container">
-                        <div class="logo-container"></div>
-                        <div class="nav-btn">
-                            <div class="nav-links">
-                                <ul>
-                                    <li class="navlink">
-                                        <a href="{% url 'authenticate:home' %}">Home</a>
-                                    </li>
-                                    <li class="navlink">
-                                        <a href="#">About<i class="fas fa-caret-down"></i></a>
-                                        <div class="dropdown">
-                                            <ul>
-                                                <li class="dropdown-link">
-                                                    <a href="#">About-PTU<i class="fas fa-caret-down"></i></a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Campus life</p></a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Hostel</a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Library</a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Sports</a>
-                                                </li>
-                                                <div class="arrow"></div>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="navlink">
-                                        <a href="#">Departments<i class="fas fa-caret-down"></i></a>
-                                        <div class="dropdown">
-                                            <ul>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Engineering<i class="fas fa-caret-down"></i></a>
-                                                    <div class="dropdown2">
-                                                        <ul>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Computer Science</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Information Technology</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Electronics & Communication</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Electrical & Electronics</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Mechatronics</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Mechanical</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Chemical</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Civil</a>
-                                                            </li>
-                                                            <li class="dropdown-link">
-                                                                <a href="#">Instrumentation</a>
-                                                            </li>
-                                                            <div class="arrow"></div>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Science<i class="fas fa-caret-down"></i></a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">Research<i class="fas fa-caret-down"></i></a>
-                                                </li>
-                                                <div class="arrow"></div>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                     <li class="navlink">
-                                        {% if request.user.is_authenticated %}
-                                            <a href="{% url 'authenticate:profilepage' request.user.pk %}">My Profile</a>
-                                        {% else %}
-                                            <a href="{% url 'authenticate:login' %}">My Profile</a>
-                                        {% endif %}   
-                                    </li>
-                                    <li class="navlink">
-                                        <a href="#">Clubs<i class="fas fa-caret-down"></i></a>
-                                        <div class="dropdown">
-                                            <ul>
-                                                <li class="dropdown-link">
-                                                    <a href="#">NCC</a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">NSS</a>
-                                                </li>
-                                                <li class="dropdown-link">
-                                                    <a href="#">DSC</a>
-                                                </li>
-                                                <div class="arrow"></div>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                   
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                <div class="introimg">
-                    <div class="ptufull">
-                        <div class="title1">
-                            <a href="http://www.pec.edu/" style="text-decoration: none;">
-                                <h1>PUDUCHEERY TECHNOLOGICAL UNIVERSITY</h1>
-                            </a>
-                        </div>
-                        <div class="subtitle">
-                            <h3>(A Technological University of Government of Puducherry)</h3>
+                    <div class="forum-img">
+                        <div class="forum-cover">
+                            <img src="{% static 'images/connect3.jpeg'%}">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="main">
-                <div class="content-intro">
-                    <div class="content-main">
-                        <div class="intro-text">
-                            <div class='detail-heading'>
-                                <h3>College Begins Here!</h3>
-                            </div>
-                            <p class="home-pg-subttl">Each and every feature of My-PTU is designed in order for you to prepare for the career you want.</p>
-                            <button type="button" class="home-pg-btn">
-                                <a href="{% url 'authenticate:signup' %}">Sign-Up</a>
-                            </button>
-                        </div>
-                        <div class="intro-img">
-                            <img src="{% static "images/connect.png" %}">
-                        </div>
+            <div class="third-service-top">
+                <div class="forum-head">
+                    <div class="line1"></div>
+                    <div class="line2">
+                        <div>Our Features</div>
                     </div>
+                    <div class="line3"></div>
                 </div>
-                <div class="first-service">
-                    <div class="service-div">
-                        <div class="wrapper">
-                            <div class="box" style="background: url({% static 'images/students3.jpg' %}); background-size:cover; background-position: center;">
-                                <div class="front-face">
-                                    <div class="cover-img">                                    
-                                    <span></span>
-                                    </div>
-                                </div>
-                                <div class="back-face">
-                                    <span>Student</span>
-                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
-                               </div>
-                            </div>
-                            <div class="box" style="background: url({% static 'images/classroom1.jpg' %}); background-size:cover; background-position: center;">
-                                <div class="front-face">
-                                    <div class="cover-img">                                    
-                                    <span></span>
-                                    </div>
-                                </div>
-                                <div class="back-face">
-                                    <span>My Classroom</span>
-                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
-                                </div>
-                            </div>
-                            <div class="box" style="background: url({% static 'images/myprofile1.jpg' %}); background-size:cover; background-position: center;">
-                                <div class="front-face">
-                                    <div class="cover-img">                                  
-                                    <span></span>
-                                    </div>
-                                </div>
-                                <div class="back-face">
-                                    <span>MY Profile</span>
-                                    <p>about students buauwvbbh liuabgfj iugc . ighbkrv b liliubvb b;zuh.llvc  liubgv kugh;zv ouga. o;h vc;oouifihv,, ;o;ugkmb buyysv hsycglzjjb  vimal kubgugsv</p>
-                                </div>
-                            </div>
+                <div class="service-div" style="top:37%;">
+                    <div class="wrapper2">
+                        <div class="lib-box"
+                            style="background-image: url({% static 'images/lib2.jpg' %}); background-position: center; background-size: cover;">
+                            <div class="overlay"></div>
                         </div>
-
-                    </div>
-                </div>
-                <div class="first-service-bottom">
-                </div>
-                <div class="second-service">
-                    <div class="forum-head">
-                        <div class="line1"><div></div></div>
-                        <div class="line2"><div>Join the Community</div></div>
-                        <div class="line3"><div></div></div>
-                    </div>
-                    <div class="forum-content">
-                        <div class="forum-detail">
-                            <div class='detail-heading'>
-                                <h3>Share  Contribute  Develop</h3>
-                            </div>
-                            <p class="home-pg-subttl">Your Ideas</p>
-                            <div class="forum-info">
-                                <p>Got stuck at any point in developing your projects? PTU has a large community of students and professors in almost every domain of engineering. MyPTU provides a great environment to interact with your fellow students and help eachother in growing towards their dream.</p>
-                            </div>
-                            <table>
-                                <tr><td>Post your Queries</td><td>Share your ideas and views</td></tr>
-                                <tr><td>Build connections</td><td>Find people with same interest</td></tr>
-                            </table>
-                            <button type="button" class="home-pg-btn">
-                                <a href="{% url 'forums:forum' %}">Join the Forum</a>
-                            </button>
+                        <div class="lib-box"
+                            style="background-image: url({% static 'images/hackathon3.jpg' %}); background-position: center; background-size: cover;">
+                            <div class="overlay"></div>
                         </div>
-                        <div class="forum-img">
-                            <div class="forum-cover">
-                                <img src="{% static 'images/connect3.jpeg'%}">
-                            </div>
+                        <div class="lib-box"
+                            style="margin-right:20px; background-image: url({% static 'images/hackathon2.jpg' %}); background-position: center; background-size: cover;">
+                            <div class="overlay"></div>
                         </div>
                     </div>
-                </div>
-                <div class="third-service-top">
-                     <div class="forum-head">
-                        <div class="line1"></div>
-                        <div class="line2"><div>Our Features</div></div>
-                        <div class="line3"></div>
+                    <div class="middle-head line2">
+                        <div style="color: #f2f2f2">Prepare Your Exams</div>
                     </div>
-                    <div class="service-div" style="top:37%;">
-                        <div class="wrapper2">
-                            <div class="lib-box" style="background-image: url({% static 'images/lib2.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
-                            <div class="lib-box" style="background-image: url({% static 'images/hackathon3.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
-                            <div class="lib-box" style="margin-right:20px; background-image: url({% static 'images/hackathon2.jpg' %}); background-position: center; background-size: cover;"><div class="overlay"></div></div>
-                        </div>
-                        <div class="middle-head line2">
-                            <div style="color: #f2f2f2">Prepare Your Exams</div>
-                        </div>
                          <div class="wrapper3">
                             <div class="lib-box" style="background-image: url({% static 'images/ptu-logo.png' %}); background-position: center; background-size: 250px 230px;"></div>
                             <div class="lib-box" style="background-image: url({% static 'images/cat-logo3.png' %}); background-position: center; background-size: cover;"><a href="{% url 'exams:exam' 'cat' %}"><div></div></a></div>
@@ -287,23 +322,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="third-service-middle">
-
-                </div>
-                <div class="third-service-bottom">
-                        
-                </div>
-                <div class="atal">
-
-                </div>
             </div>
-            <div id="footer">
-            
+            <div class="third-service-middle">
+
+            </div>
+            <div class="third-service-bottom">
+
+            </div>
+            <div class="atal">
+
             </div>
         </div>
+        <div id="footer">
 
-        <script src="home_resp.js"></script>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    </body>   
- </html>   
+        </div>
+    </div>
+
+    <script src="home_resp.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

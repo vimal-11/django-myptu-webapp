@@ -28,3 +28,4 @@ def room(request, room_name):
         'chats': chats,
         #'username': request.user.username
     })
+    

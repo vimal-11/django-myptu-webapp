@@ -89,3 +89,4 @@ class Gate_Syllabus(models.Model):
 
     def __str__(self):
         return self.gate_paper
+        
