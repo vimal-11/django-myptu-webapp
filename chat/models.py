@@ -23,3 +23,4 @@ class Message(models.Model):
 
     def last_20_messages():
         return Message.objects.order_by('-time').all()[:20]
+

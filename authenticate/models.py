@@ -12,7 +12,8 @@ class users(models.Model):
     email = models.EmailField(default='')
     date_of_birth = models.DateField(default='')
     contact_number = models.IntegerField()
-    program_choices = [('BTECH', 'BTech.'), ('MTECH', 'Mtech'), ('MBA', 'MBA'), ('PhD', 'PhD'), ('RESEARCH', 'Research')]
+    program_choices = [('BTECH', 'BTech.'), ('MTECH', 'Mtech'), ('MBA', 'MBA'), 
+    ('PhD', 'PhD'), ('RESEARCH', 'Research')]
     program = models.CharField(choices=program_choices, default='BTECH', max_length=40)
     department = models.CharField(max_length=40,default='')
     section = models.IntegerField()
