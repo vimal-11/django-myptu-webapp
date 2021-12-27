@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('authenticate.urls')),
     path('forum/', include('forums.urls')),
+    path('friend/', include('friend.urls', namespace='friend')),
     path('tinymce/', include('tinymce.urls')),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
     path('accounts/', include('allauth.urls')),

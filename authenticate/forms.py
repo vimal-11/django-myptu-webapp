@@ -13,17 +13,14 @@ class UserRegisterForm(ModelForm, forms.Form):
         model = users
         fields = '__all__'
         widgets = {
-                'date_of_birth': forms.SelectDateWidget(years=range(2015, 1900, -1)),
-                'create_password': forms.PasswordInput,
-                'confirm_password': forms.PasswordInput
+            'date_of_birth': forms.SelectDateWidget(years=range(2015, 1900, -1)),
+            'create_password': forms.PasswordInput,
+            'confirm_password': forms.PasswordInput
         }
-
-
-
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username__iexact = username).exists():
+        if User.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError('Username aldready exists')
         return username
 
@@ -32,13 +29,14 @@ class UserRegisterForm(ModelForm, forms.Form):
         dob = self.cleaned_data.get('date_of_birth')
         today = datetime.date.today()
         if (dob.year + userAge, dob.month, dob.day) > (today.year, today.month, today.day):
-            raise forms.ValidationError('User must be aged {} years and above.'. format(userAge)) 
+            raise forms.ValidationError('User must be aged {} years and above.'. format(userAge))
         return dob
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email__iexact=email).exists():
-            raise forms.ValidationError('A user has already registered using this email')
+            raise forms.ValidationError(
+                'A user has already registered using this email')
         return email
 
     def clean_password(self):
@@ -60,4 +58,3 @@ class UserRegisterForm(ModelForm, forms.Form):
         if len(contact) < 10:
             raise forms.ValidationError('Enter a valid contact number')
         return contact
-        

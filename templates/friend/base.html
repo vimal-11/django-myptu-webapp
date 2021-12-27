@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>MyPTU-Forum</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static '/css/forumstyle.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Markdown-it -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/11.0.1/markdown-it.min.js" integrity="sha512-hW0KbtvDnXCHbh2UCNP/6R+oXxCKiOfm9ciuUekdGBCQF1+57bGqZAk3sAFir7PMQstyRW0UecsSc2HQotH2vg==" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/default.min.css" integrity="sha512-kZqGbhf9JTB4bVJ0G8HCkqmaPcRgo88F0dneK30yku5Y/dep7CZfCnNml2Je/sY4lBoqoksXz4PtVXS4GHSUzQ==" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/kotlin.min.js" integrity="sha512-8aYTnyDstX39PHxorDD+6ROknf98Vqr5KTOjwRCl/442uAVKOpCJ5wY9I3VQ6y46rdDJKYBIglIfE2+GQk8U5Q==" crossorigin="anonymous"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="head">         
+            <div class="navbar">
+                <nav class="forum-nav">
+                    <ul class="logo">
+                        <li>MyPTU <span style="color:#5f6368">Forum</span></li>
+                    </ul>
+                    <div class="res-nav">
+                        <div class="l1"></div>
+                        <div class="l2"></div>
+                        <div class="l3"></div>
+                    </div>
+                    <ul class="nav-list">
+                        <li class="nav-lnk">
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'authenticate:logout' %}" method="POST">Logout</a>
+                        {% else %}
+                            <a href="{% url 'authenticate:login' %}?next={{ request.path }}" method="POST">Login</a>
+                        {% endif %}
+                        </li>
+                        <li class="nav-lnk">
+                            <a href="{% url 'forums:forum' %}">Categories</a>
+                        </li>
+                        <li class="nav-lnk">
+                            <a href="#">Profile</a>
+                        </li>
+                        <li class="nav-lnk">
+                            <a href="{% url 'authenticate:home' %}">Home</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!--Search Box-->
+        <div class="search-box">
+
+        <form action="{% url 'forums:search_results' %}" method="GET">
+    
+            <select name="search-box" id="">
+                <option value="title">Title</option>
+                <option value="category">Category</option>
+            </select>
+            <input type="text"  class="main-search" name="keyword" id="" placeholder="Search">
+            <div class="search-but">
+                <button type="submit" name="search-sub"><i class="material-icons">search</i></button>
+                <input type="text"  class="res-search" name="keyword-mob" id="" placeholder="Search">
+            </div>
+        </form>
+
+            <div class="postquery">
+                <button type="button"><a href="{% url 'forums:newquery' %}" style="color:#fff;"><i class="material-icons">add</i><span>New Query</span></a></button>
+            </div>
+        </div>
+
+        {% block content %}
+        
+        {% endblock content %}
+
+
+        <div class="footer">
+        
+        </div>
+        
+        <script src="{% static '/js/forum.js' %}" async defer></script>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+        </script>
+    </body>
+</html>
