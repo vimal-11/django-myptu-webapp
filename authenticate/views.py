@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.views import View
-from django.contrib.auth.models import User
+from authenticate.models import Account
 from django.contrib import messages
 from django.forms import modelformset_factory
 from django.core.mail import send_mail, EmailMessage
@@ -16,6 +16,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import authenticate, login, logout
 from PTU import settings
+from django.conf import settings
 
 from authenticate.forms import UserRegisterForm
 from authenticate.models import users
@@ -44,7 +45,7 @@ def signup(request):
             last_name = form.cleaned_data.get('last_name')
             form.save()
 
-            new_user = User.objects.create_user(
+            new_user = Account.objects.create_user(
                 username=username, email=email, password=password)
             new_user.first_name = first_name
             new_user.last_name = last_name
@@ -87,7 +88,7 @@ def loginUser(request):
         pass1 = request.POST['password']
         #print(username,type(username), pass1, type(pass1) )
         if "@" in username:
-            user_cred = User.objects.get(email=username.lower()).username
+            user_cred = Account.objects.get(email=username.lower()).username
         else:
             user_cred = username
 
@@ -125,9 +126,9 @@ def index(request):
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        new_user = User.objects.get(pk=uid)
+        new_user = Account.objects.get(pk=uid)
 
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
         new_user = None
 
     if new_user is not None and generate_token.check_token(new_user, token):
@@ -142,7 +143,7 @@ class profile_view(LoginRequiredMixin, View):
     def get(self, request, pk=None):
         context = {}
         try:
-            user_acc = User.objects.get(pk=pk)
+            user_acc = Account.objects.get(pk=pk)
         except:
             return HttpResponse("Something went wrong.")
         

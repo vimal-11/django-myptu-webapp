@@ -1,12 +1,13 @@
 from decimal import Context
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.conf import settings
+
+from authenticate.models import Account
 from .models import Category, Query, Reply
 from . utils import update_views
 from .forms import NewQuery
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
 # Create your views here.
 
 def forum(request):
@@ -46,7 +47,7 @@ def topic(request, slug):
 @login_required(login_url="authenticate:login")
 def query(request, slug):
     question = get_object_or_404(Query, slug=slug)
-    r_user = User.objects.get(username = request.user.username)
+    r_user = Account.objects.get(username = request.user.username)
     print("rply start! \n")
 
     if "submit_reply" in request.POST:
@@ -69,7 +70,7 @@ def newquery(request):
     form = NewQuery(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            q_user = User.objects.get(username = request.user.username)
+            q_user = Account.objects.get(username = request.user.username)
             new_query = form.save(commit=False)
             new_query.user = q_user
             new_query.save()

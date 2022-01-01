@@ -1,8 +1,9 @@
 from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from authenticate.models import users
-from django.contrib.auth.models import User
+from authenticate.models import Account
+
+from django.conf import settings
 import datetime
 
 
@@ -10,7 +11,7 @@ import datetime
 
 class UserRegisterForm(ModelForm, forms.Form):
     class Meta:
-        model = users
+        model = Account
         fields = '__all__'
         widgets = {
             'date_of_birth': forms.SelectDateWidget(years=range(2015, 1900, -1)),
@@ -20,7 +21,7 @@ class UserRegisterForm(ModelForm, forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username__iexact=username).exists():
+        if Account.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError('Username aldready exists')
         return username
 
@@ -29,12 +30,12 @@ class UserRegisterForm(ModelForm, forms.Form):
         dob = self.cleaned_data.get('date_of_birth')
         today = datetime.date.today()
         if (dob.year + userAge, dob.month, dob.day) > (today.year, today.month, today.day):
-            raise forms.ValidationError('User must be aged {} years and above.'. format(userAge))
+            raise forms.ValidationError('user must be aged {} years and above.'. format(userAge))
         return dob
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email__iexact=email).exists():
+        if Account.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
                 'A user has already registered using this email')
         return email
