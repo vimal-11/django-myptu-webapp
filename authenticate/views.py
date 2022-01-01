@@ -19,7 +19,6 @@ from PTU import settings
 from django.conf import settings
 
 from authenticate.forms import UserRegisterForm
-from authenticate.models import users
 from friend.models import FriendList, FriendRequest
 from friend.request_status import FriendRequestStatus
 from friend.utils import get_friend_request_or_false
@@ -33,20 +32,24 @@ def home(request):
     return render(request, "authenticate/home.html")
 
 
-def signup(request):
+def signup(request, *args, **kwargs):
 
+    user = request.user
+    if user.is_authenticated: 
+        return HttpResponse("You are already authenticated as " + str(user.email))
+
+    context = {}
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): 
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('create_password')
+            password = form.cleaned_data.get('password2')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             form.save()
 
-            new_user = Account.objects.create_user(
-                username=username, email=email, password=password)
+            new_user = Account.objects.get(email=email, username=username)
             new_user.first_name = first_name
             new_user.last_name = last_name
             new_user.is_active = False
@@ -58,6 +61,7 @@ def signup(request):
             # Confirmation mail
 
             current_site = get_current_site(request)
+            print(current_site)
             email_subject = "MYPTU - Confirmation Mail!"
             message = render_to_string('email_confirmation.html', {
                 'name': new_user.first_name,
@@ -75,10 +79,12 @@ def signup(request):
             email.send()
 
             return render(request, 'authenticate/index.html', {'name': new_user.first_name})
+        else:
+            context['registration_form'] = form
     else:
         form = UserRegisterForm()
-
-    return render(request, 'authenticate/signup.html', {'form': form})
+        context['registration_form'] = form
+    return render(request, 'authenticate/signup.html', context)
 
 
 def loginUser(request):
@@ -130,7 +136,7 @@ def activate(request, uidb64, token):
 
     except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
         new_user = None
-
+    print("checking index")
     if new_user is not None and generate_token.check_token(new_user, token):
         new_user.is_active = True
         new_user.save()
@@ -155,7 +161,7 @@ class profile_view(LoginRequiredMixin, View):
             try:
                 friend_list = FriendList.objects.get(user=user_acc)
             except FriendList.DoesNotExist:
-                friend_list = FriendList(user=user_acc)
+                friend_list = FriendList.objects.create(user=user_acc)
                 friend_list.save()
             friends = friend_list.friends.all()
             context['friends'] = friends

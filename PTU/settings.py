@@ -70,7 +70,9 @@ INSTALLED_APPS = [
    
 ]
 
-SITE_ID = 1
+#SITE_ID = 1
+#for development using local host, make sure to use production domain in production
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,7 +127,7 @@ DATABASES = {
     }
 }
 
-#AUTH_USER_MODEL = 'authenticate.users'
+
 
 
 # Password validation

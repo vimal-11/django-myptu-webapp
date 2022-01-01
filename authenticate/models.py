@@ -23,7 +23,7 @@ class MyAccountManager(BaseUserManager):
 			    username=username,
 		)
         user.set_password(password)
-        user.save(using=self._db)
+        #user.save(using=self._db)
         return user
 
     def create_superuser(self, email, username, password):
@@ -55,7 +55,7 @@ class Account(AbstractBaseUser):
     date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login				= models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin				= models.BooleanField(default=False)
-    is_active				= models.BooleanField(default=True)
+    is_active				= models.BooleanField(default=False)
     is_staff				= models.BooleanField(default=False)
     is_superuser			= models.BooleanField(default=False)
     profile_image			= models.ImageField(max_length=255, upload_to=get_profile_image_filepath, null=True, blank=True, default=get_default_profile_image)
@@ -82,32 +82,32 @@ class Account(AbstractBaseUser):
 
 @receiver(post_save, sender=Account)
 def user_save(sender, instance, **kwargs):
-    FriendList.objects.get_or_create(user=instance)   
+    FriendList.objects.get_or_create(user=instance)
 
-class users(models.Model):
-    username = models.CharField(max_length=20,default='')
-    first_name = models.CharField(max_length=30,default='')
-    last_name = models.CharField(max_length=30,default='')
-    email = models.EmailField(default='')
-    date_of_birth = models.DateField(default='')
-    contact_number = models.IntegerField()
-    program_choices = [('BTECH', 'BTech.'), ('MTECH', 'Mtech'), ('MBA', 'MBA'), 
-    ('PhD', 'PhD'), ('RESEARCH', 'Research')]
-    program = models.CharField(choices=program_choices, default='BTECH', max_length=40)
-    department = models.CharField(max_length=40,default='')
-    section = models.IntegerField()
-    create_password = models.CharField(max_length=30,default=' ')
-    confirm_password = models.CharField(max_length=30,default=' ')
-    YEAR_IN_SCHOOL_CHOICES = [
-        ('FRESHMAN', 'Freshman'),
-        ('SOPHOMORE', 'Sophomore'),
-        ('JUNIOR', 'Junior'),
-        ('SENIOR', 'Senior'),
-        ('GRADUATE', 'Graduate'),
-    ]
-    year_in_school = models.CharField(
-        max_length=20,
-        choices=YEAR_IN_SCHOOL_CHOICES,
-        default='FRESHMAN',)
+# class users(models.Model):
+#     username = models.CharField(max_length=20,default='')
+#     first_name = models.CharField(max_length=30,default='')
+#     last_name = models.CharField(max_length=30,default='')
+#     email = models.EmailField(default='')
+#     date_of_birth = models.DateField(default='')
+#     contact_number = models.IntegerField()
+#     program_choices = [('BTECH', 'BTech.'), ('MTECH', 'Mtech'), ('MBA', 'MBA'), 
+#     ('PhD', 'PhD'), ('RESEARCH', 'Research')]
+#     program = models.CharField(choices=program_choices, default='BTECH', max_length=40)
+#     department = models.CharField(max_length=40,default='')
+#     section = models.IntegerField()
+#     create_password = models.CharField(max_length=30,default=' ')
+#     confirm_password = models.CharField(max_length=30,default=' ')
+#     YEAR_IN_SCHOOL_CHOICES = [
+#         ('FRESHMAN', 'Freshman'),
+#         ('SOPHOMORE', 'Sophomore'),
+#         ('JUNIOR', 'Junior'),
+#         ('SENIOR', 'Senior'),
+#         ('GRADUATE', 'Graduate'),
+#     ]
+#     year_in_school = models.CharField(
+#         max_length=20,
+#         choices=YEAR_IN_SCHOOL_CHOICES,
+#         default='FRESHMAN',)
     
 
