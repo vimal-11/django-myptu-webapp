@@ -33,7 +33,6 @@ def home(request):
 
 
 def signup(request, *args, **kwargs):
-
     user = request.user
     if user.is_authenticated: 
         return HttpResponse("You are already authenticated as " + str(user.email))
@@ -59,26 +58,26 @@ def signup(request, *args, **kwargs):
             messages.success(request, 'Registered Successfully!')
 
             # Confirmation mail
-
             current_site = get_current_site(request)
             print(current_site)
             email_subject = "MYPTU - Confirmation Mail!"
-            message = render_to_string('email_confirmation.html', {
-                'name': new_user.first_name,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                'token': generate_token.make_token(new_user)
-            })
+            message = render_to_string('email_confirmation.html', 
+                {
+                    'name': new_user.first_name,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                    'token': generate_token.make_token(new_user)
+                })
             email = EmailMessage(
-                email_subject,
-                message,
-                settings.EMAIL_HOST_USER,
-                [new_user.email],
-            )
+                            email_subject,
+                            message,
+                            settings.EMAIL_HOST_USER,
+                            [new_user.email],
+                        )
             email.fail_silently = True
             email.send()
-
-            return render(request, 'authenticate/index.html', {'name': new_user.first_name})
+            return render(request, 'authenticate/index.html', 
+                                        {'name': new_user.first_name})
         else:
             context['registration_form'] = form
     else:
@@ -88,24 +87,17 @@ def signup(request, *args, **kwargs):
 
 
 def loginUser(request):
-
     if request.method == 'POST':
         username = request.POST['username']
         pass1 = request.POST['password']
-        #print(username,type(username), pass1, type(pass1) )
         if "@" in username:
             user_cred = Account.objects.get(email=username.lower()).username
         else:
             user_cred = username
-
         user = authenticate(request, username=user_cred, password=pass1)
-
-        print(user, type(user))
-
         if user is not None:
             login(request, user)
             fname = user.first_name
-
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
@@ -113,7 +105,6 @@ def loginUser(request):
         else:
             messages.error(request, "Bad Credentials!")
             return redirect('authenticate:home')
-
     return render(request, 'authenticate/login.html')
 
 
@@ -122,7 +113,6 @@ def logoutUser(request):
     # if request.method == 'POST':
     logout(request)
     return redirect('authenticate:home')
-    # return redirect('authenticate:login')
 
 
 def index(request):
@@ -136,7 +126,6 @@ def activate(request, uidb64, token):
 
     except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
         new_user = None
-    print("checking index")
     if new_user is not None and generate_token.check_token(new_user, token):
         new_user.is_active = True
         new_user.save()
@@ -146,6 +135,14 @@ def activate(request, uidb64, token):
 
 
 class profile_view(LoginRequiredMixin, View):
+    """
+	- Logic here is kind of tricky
+		is_self
+		is_friend
+			-1: NO_REQUEST_SENT
+			0: THEM_SENT_TO_YOU
+			1: YOU_SENT_TO_THEM
+	"""
     def get(self, request, pk=None):
         context = {}
         try:
@@ -157,6 +154,8 @@ class profile_view(LoginRequiredMixin, View):
             context['id'] = user_acc.id
             context['username'] = user_acc.username
             context['email'] = user_acc.email
+            context['profile_image'] = user_acc.profile_image.url
+            context['hide_email'] = user_acc.hide_email
 
             try:
                 friend_list = FriendList.objects.get(user=user_acc)
@@ -169,7 +168,8 @@ class profile_view(LoginRequiredMixin, View):
             # Define template variables
             is_self = True
             is_friend = False
-            request_sent = FriendRequestStatus.NO_REQUEST_SENT.value # range: ENUM -> friend/friend_request_status.FriendRequestStatus
+            # range: ENUM -> friend/friend_request_status.FriendRequestStatus
+            request_sent = FriendRequestStatus.NO_REQUEST_SENT.value 
             friend_requests = None
             user = request.user
             if user.is_authenticated and user != user_acc:
@@ -178,29 +178,38 @@ class profile_view(LoginRequiredMixin, View):
                     is_friend = True
                 else:
                     is_friend = False
-                    # CASE1: Request has been sent from THEM to YOU: FriendRequestStatus.THEM_SENT_TO_YOU
+
+                    # CASE1: Request has been sent from THEM to YOU: 
+                    # FriendRequestStatus.THEM_SENT_TO_YOU
                     if get_friend_request_or_false(sender=user_acc, receiver=user) != False:
                         request_sent = FriendRequestStatus.THEM_SENT_TO_YOU.value
-                        context['pending_friend_request_id'] = get_friend_request_or_false(sender=user_acc, receiver=user).id
-                    # CASE2: Request has been sent from YOU to THEM: FriendRequestStatus.YOU_SENT_TO_THEM
+                        context['pending_friend_request_id'] = get_friend_request_or_false(
+                                                                sender=user_acc,
+                                                                receiver=user).id
+
+                    # CASE2: Request has been sent from YOU to THEM: 
+                    # FriendRequestStatus.YOU_SENT_TO_THEM
                     elif get_friend_request_or_false(sender=user, receiver=user_acc) != False:
                         request_sent = FriendRequestStatus.YOU_SENT_TO_THEM.value
-                    # CASE3: No request sent from YOU or THEM: FriendRequestStatus.NO_REQUEST_SENT
+
+                    # CASE3: No request sent from YOU or THEM: 
+                    # FriendRequestStatus.NO_REQUEST_SENT
                     else:
                         request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
             elif not user.is_authenticated:
                 is_self = False
             else:
                 try:
-                    friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
+                    friend_requests = FriendRequest.objects.filter(receiver=user, 
+                                                                is_active=True)
                 except:
                     pass
-                
+
             # Set the template variables to the values
             context['is_self'] = is_self
             context['is_friend'] = is_friend
             context['request_sent'] = request_sent
             context['friend_requests'] = friend_requests
-            #context['BASE_URL'] = settings.BASE_URL
+            context['BASE_URL'] = settings.BASE_URL
         return render(request, 'authenticate/profilepage.html', context)
     

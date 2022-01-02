@@ -12,11 +12,17 @@ import datetime
 
 class UserRegisterForm(UserCreationForm):
 
-    email = forms.EmailField(max_length=254, help_text='Required. Add a valid email address.')
+    email = forms.EmailField(max_length=254, 
+                             help_text='Required. Add a valid email address.')
 
     class Meta:
         model = Account
-        fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2', )
+        fields = ('email', 
+                  'username', 
+                  'first_name', 
+                  'last_name', 
+                  'password1', 
+                  'password2', )
         widgets = {
             'date_of_birth': forms.SelectDateWidget(years=range(2015, 1900, -1)),
             'create_password': forms.PasswordInput,
