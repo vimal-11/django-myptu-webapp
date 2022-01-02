@@ -30,7 +30,7 @@
                         <span class="show">SHOW</span>
                     </div>
                     <div class="forgotps">
-                        <a href="#">Forgot Password?</a>
+                        <a href="{% url 'password_reset' %}">Forgot Password?</a>
                     </div>
                     <div class="feild">
                         {% if request.GET.next %}
@@ -41,14 +41,14 @@
                     <div class="loginwith">Or login with</div>
                     <div class="social">
                         <ul class="icons">
-                            <li><a href="{% provider_login_url "facebook" %}"><img src="{% static 'images/facebook.png'%}"></a></li>
-                            <li><a href="{% provider_login_url "google" %}"><img src="{% static 'images/search.png'%}"></a></li>
-                            <li><a href="{% provider_login_url "github" %}"><img src="{% static 'images/github.png'%}" style="height: 44px; width: 44px; margin-right: 2px;"></a></li>
+                            <li><a href="{% provider_login_url 'facebook' %}"><img src="{% static 'images/facebook.png'%}"></a></li>
+                            <li><a href="{% provider_login_url 'google' %}"><img src="{% static 'images/search.png'%}"></a></li>
+                            <li><a href="{% provider_login_url 'github' %}"><img src="{% static 'images/github.png'%}" style="height: 44px; width: 44px; margin-right: 2px;"></a></li>
                         </ul>
                     </div>
                     <div class="signup">
                         Don't have an account ? 
-                        <a href="/signup"> Sign up</a>
+                        <a href="{% url 'authenticate:signup' %}"> Sign up</a>
                     </div>
                 </form> 
              </div>

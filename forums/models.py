@@ -4,16 +4,17 @@ from django.db.models.fields import related
 from django.db.models.fields.related import ForeignKey
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
-from tinymce.models import HTMLField
-from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
-from taggit.managers import TaggableManager
 from django.shortcuts import reverse
+from django.conf import settings
+
 from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
+from taggit.managers import TaggableManager
+from hitcount.models import HitCountMixin, HitCount
 
 # Create your models here.
 
-User = get_user_model()
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
@@ -44,7 +45,7 @@ class Category(models.Model):
 
 
 class Reply(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     reply = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
@@ -58,7 +59,7 @@ class Reply(models.Model):
 class Query(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     content = RichTextField(blank=True, null=True)
     #content = models.TextField()
     categories = models.ManyToManyField(Category)
