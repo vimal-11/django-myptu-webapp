@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>MyPTU-Forum</title>
+        <title>MyPTU</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static '/css/forumstyle.css' %}">
@@ -52,22 +52,13 @@
         <!--Search Box-->
         <div class="search-box">
 
-        <form action="{% url 'forums:search_results' %}" method="GET">
-    
-            <select name="search-box" id="">
-                <option value="title">Title</option>
-                <option value="category">Category</option>
-            </select>
-            <input type="text"  class="main-search" name="keyword" id="" placeholder="Search">
-            <div class="search-but">
-                <button type="submit" name="search-sub"><i class="material-icons">search</i></button>
-                <input type="text"  class="res-search" name="keyword-mob" id="" placeholder="Search">
-            </div>
-        </form>
-
-            <div class="postquery">
-                <button type="button"><a href="{% url 'forums:newquery' %}" style="color:#fff;"><i class="material-icons">add</i><span>New Query</span></a></button>
-            </div>
+            <form method="GET" onsubmit="return executeQuery();">
+                <input type="text"  class="main-search" name="keyword" id="id_q_large" placeholder="Search">
+                <div class="search-but">
+                    <button type="submit" name="search-sub"><i class="material-icons">search</i></button>
+                    <input type="text"  class="res-search" name="keyword-mob" id="" placeholder="Search">
+                </div>
+            </form>
         </div>
 
         {% block content %}
@@ -84,6 +75,22 @@
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
+        </script>
+
+        <script type="text/javascript">
+            
+
+            function executeQuery() {
+                var query = ""
+                query = document.getElementById('id_q_large').value;
+                if (query == ""){
+                    query = document.getElementById('id_q_large').value;
+                }
+                window.location.replace("{% url 'authenticate:search' %}?q=" + query)
+                return false
+            }
+
+
         </script>
     </body>
 </html>
