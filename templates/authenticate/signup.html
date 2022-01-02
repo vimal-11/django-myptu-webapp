@@ -1,20 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'authenticate/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <style type="text/css">
+
+    .card-signin {
+        width: 100%;
+        max-width: 400px;
+        padding: 15px;
+        margin: auto;
+    }
+    
+    .form-signin input[type="email"] {
+      margin-bottom: 10px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .form-signin input[type="text"] {
+      margin-bottom: 10px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .form-signin input[type="password"] {
+      margin-bottom: -1px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  
+  
+    </style>
+  
+
     {% load crispy_forms_tags %}
-    <form action="/signup" method="POST">
+    <form  method="POST">
     {% csrf_token %}
-        <table>
-            {{ form|crispy }}
-        </table>
+        
+        
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><br><br>
+
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required><br><br>
+
+        <input type="text" name="first_name" id="inputUsername" class="form-control" placeholder="First Name" required><br><br>
+
+        <input type="text" name="last_name" id="inputUsername" class="form-control" placeholder="Last Name"><br><br>
+
+        <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required><br><br>
+
+        <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required><br><br>
+
+        
+
+        {% for field in registration_form %}
+        <p>
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        </p>
+        {% endfor %}
+        {% if registration_form.non_field_errors %}
+        <div style="color: red">
+            <p>{{registration_form.non_field_errors}}</p>
+        </div>
+        {% endif %}
+
         <button type="submit">Sign Up</button>
     </form>
-
-</body>
-</html>
+{% endblock content %}

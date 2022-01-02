@@ -35,6 +35,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authenticate.Account'
+
+
 
 # Application definition
 
@@ -67,7 +70,9 @@ INSTALLED_APPS = [
    
 ]
 
-SITE_ID = 1
+#SITE_ID = 1
+#for development using local host, make sure to use production domain in production
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,7 +127,7 @@ DATABASES = {
     }
 }
 
-#AUTH_USER_MODEL = 'authenticate.users'
+
 
 
 # Password validation
@@ -150,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
+    'django.contrib.auth.backends.AllowAllUsersModelBackend', 
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
@@ -206,3 +211,5 @@ MESSAGE_TAGS = {
 TAGGIT_CASE_INSENSITIVE = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BASE_URL = 'http://127.0.0.1:8000'

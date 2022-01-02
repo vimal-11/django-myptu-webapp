@@ -1,17 +1,17 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 # Create your models here.
 
 class FriendList(models.Model): 
 
-	user 				= models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name="user")
-	friends 			= models.ManyToManyField(User, blank=True, related_name="friends") 
+	user 				= models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name="user")
+	friends 			= models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="friends") 
 
 	# set up the reverse relation to GenericForeignKey
 	#notifications		= GenericRelation(Notification)
