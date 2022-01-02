@@ -2,7 +2,7 @@ from django.http.response import HttpResponseServerError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.models import User
+from authenticate.models import Account
 from .models import FriendList, FriendRequest
 import json
 
@@ -32,9 +32,9 @@ def friends_list_view(request, *args, **kwargs):
 		user_id = kwargs.get("user_id")
 		if user_id:
 			try:
-				this_user = User.objects.get(pk=user_id)
+				this_user = Account.objects.get(pk=user_id)
 				context['this_user'] = this_user
-			except User.DoesNotExist:
+			except Account.DoesNotExist:
 				return HttpResponse("That user does not exist.")
 			try:
 				friend_list = FriendList.objects.get(user=this_user)
@@ -81,7 +81,7 @@ def friend_requests(request, *args, **kwargs):
 	user = request.user
 	if user.is_authenticated:
 		user_id = kwargs.get("user_id")
-		account = User.objects.get(pk=user_id)
+		account = Account.objects.get(pk=user_id)
 		if account == user:
 			friend_requests = FriendRequest.objects.filter(receiver=account, 
 															is_active=True)
@@ -115,7 +115,7 @@ def send_friend_request(request, *args, **kwargs):
 	if request.method == "POST" and user.is_authenticated:
 		user_id = request.POST.get("receiver_user_id")
 		if user_id:
-			receiver = User.objects.get(pk=user_id)
+			receiver = Account.objects.get(pk=user_id)
 			try:
 				# Get any friend requests (active and not-active)
 				friend_requests = FriendRequest.objects.filter(sender=user, 
@@ -212,7 +212,7 @@ def remove_friend(request, *args, **kwargs):
 		user_id = request.POST.get("receiver_user_id")
 		if user_id:
 			try:
-				removee = User.objects.get(pk=user_id)
+				removee = Account.objects.get(pk=user_id)
 				friend_list = FriendList.objects.get(user=user)
 				friend_list.unfriend(removee)
 				payload['response'] = "Successfully removed that friend."
@@ -291,7 +291,7 @@ def cancel_friend_request(request, *args, **kwargs):
 	if request.method == "POST" and user.is_authenticated:
 		user_id = request.POST.get("receiver_user_id")
 		if user_id:
-			receiver = User.objects.get(pk=user_id)
+			receiver = Account.objects.get(pk=user_id)
 			try:
 				friend_requests = FriendRequest.objects.filter(sender=user, 
 															receiver=receiver, 

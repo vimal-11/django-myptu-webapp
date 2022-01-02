@@ -3,7 +3,8 @@
 
 {% block content %}
     
-        <h1>Hello {{ username }}!</h1>
+        <h1>{{ username }}!</h1>
+		{% if is_self %}
         <h3>You are successfuly logged in</h3>
         <nav>
             <ul>
@@ -15,8 +16,41 @@
                 </li>
             </ul>
         </nav>
-        <button><a href="{% url 'chat:chatindex' %}"> MyChat </a></button>
+		{% endif %}
+		<br><br>
 
+		<div class="card profile-card m-2">
+			<div class="card-body">
+				<div class="d-flex flex-column justify-content-center p-4">
+					<div class="image-container mx-auto mb-4">
+						<img class="d-block border border-dark rounded-circle img-fluid mx-auto profile-image" alt="logo" id="id_profile_image" src="{{profile_image}}">
+					</div>
+					<br><br>
+					
+					{%  if is_self %}
+						<p class="mt-4 mb-1 field-heading">Email</p>
+						<h5>{{email}}</h5>
+					{% else %}
+						{% if not hide_email %}
+							<h5>{{email}}</h5>
+						{% endif %}
+					{% endif %}
+					<p class="mt-4 mb-1 field-heading">Username</p>
+					<h5>{{username}}</h5>
+					<br><br>
+					<!-- If Auth user is viewing their own profile -->
+					{% if is_self %}
+					<a  class="mt-4 btn btn-primary" href="#">Update</a>
+					<div class="d-flex flex-column mt-4">
+						<a class="m-auto" href="{% url 'password_change' %}">Change password</a>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<br><br>
+        <button><a href="{% url 'chat:chatindex' %}"> MyChat </a></button>
+		<br><br>
         <!--Friend System-->
 
         {% if request.user.is_authenticated %}
