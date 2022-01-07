@@ -18,7 +18,7 @@ from django.contrib.auth import authenticate, login, logout
 from PTU import settings
 from django.conf import settings
 
-from authenticate.forms import UserRegisterForm
+from authenticate.forms import AccountUpdateForm, UserRegisterForm
 from friend.models import FriendList, FriendRequest
 from friend.request_status import FriendRequestStatus
 from friend.utils import get_friend_request_or_false
@@ -238,3 +238,43 @@ class profile_view(LoginRequiredMixin, View):
             context['BASE_URL'] = settings.BASE_URL
         return render(request, 'authenticate/profilepage.html', context)
     
+
+def edit_account_view(request, *args, **kwargs):
+	if not request.user.is_authenticated:
+		return redirect("authenticate:login")
+	user_id = kwargs.get("user_id")
+	account = Account.objects.get(pk=user_id)
+	if account.pk != request.user.pk:
+		return HttpResponse("You cannot edit someone elses profile.")
+	context = {}
+	if request.POST:
+		form = AccountUpdateForm(request.POST, request.FILES, instance=request.user)
+		if form.is_valid():
+			form.save()
+			return redirect("authenticate:profilepage", pk=account.pk)
+		else:
+			form = AccountUpdateForm(request.POST, instance=request.user,
+				initial={
+					"id": account.pk,
+					"email": account.email, 
+					"username": account.username,
+					"profile_image": account.profile_image,
+					"first_name": account.first_name,
+					"last_name": account.last_name,
+				}
+			)
+			context['form'] = form
+	else:
+		form = AccountUpdateForm(
+			initial={
+					"id": account.pk,
+					"email": account.email, 
+					"username": account.username,
+					"profile_image": account.profile_image,
+					"first_name": account.first_name,
+					"last_name": account.last_name,
+				}
+			)
+		context['form'] = form
+	context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
+	return render(request, "authenticate/edit_account.html", context)
