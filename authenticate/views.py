@@ -236,6 +236,7 @@ class profile_view(LoginRequiredMixin, View):
             context['request_sent'] = request_sent
             context['friend_requests'] = friend_requests
             context['BASE_URL'] = settings.BASE_URL
+        print(context)
         return render(request, 'authenticate/profilepage.html', context)
     
 
