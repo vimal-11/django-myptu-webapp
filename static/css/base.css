@@ -13,7 +13,6 @@ html{
 
 a{
     color: var(--color-theme-blue);
-    font-weight: bolder;
     text-decoration: none;
 }
 
@@ -66,6 +65,7 @@ h1{
 .nav-lnk > a{
     margin-inline: 20px;
     font-size: 16px;
+    font-weight: bolder;
     font-family: var(--font-nav-link);
     font-weight: 300;
     letter-spacing: 1px;

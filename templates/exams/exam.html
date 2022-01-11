@@ -2,15 +2,15 @@
 
 {% block content %}
 
-        <div class="container" >
-            {% for field in fields %}
-                <div class="row p-3 mb-2 bg-light border text-white rounded shadow-sm">
-                    <div class="col-sm">
-                        <a href="{{field.get_url}}">{{field}}</a>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="tab-content" id="v-nav-tab">
+    <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-nav-upsc-tab">
+        {% for field in fields %}
+        <div class=" p-3 mb-2 bg-light border text-white rounded shadow-sm">
+            <div class="col-sm">
+                <a href="{{field.get_url}}">{{field}}</a>
+            </div>
         </div>
+        {% endfor %}
         <br>
         {% if gate_syllabus is not None %}
             <table>
@@ -27,7 +27,13 @@
                             <td><a href='{{s.syllabus}}'>Click Here</a></td>
                         </tr>
                     {% endfor %}
-               </tbody>
+            </tbody>
             </table>
         {% endif %}
+    </div>
+    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+    </div>
+        
 {% endblock content %}

@@ -28,10 +28,15 @@
             }
             .nav-link{
                 color: var(--color-nav-link-grey) !important;
+                font-weight: bold;
             }
             .nav-link:hover{
                 color: var(--color-theme-blue) !important;
                 transform: scale(1.03);
+            }
+
+            .nav-link.active {
+                color: #0080FF;
             }
 
             @media screen and (max-width: 460px){
@@ -87,9 +92,23 @@
     -->
         </div>
 
-        {% block content %}
+        <div class="container" >
+            <div class="row">
+                <div class="col-2">
+                    <nav class="nav flex-column bd-links border-right">
+                        <a class="nav-link active" aria-current="page" href="{% url 'exams:exam' 'upsc' %}">UPSC</a>
+                        <a class="nav-link" href="{% url 'exams:exam' 'cat' %}">CAT</a>
+                        <a class="nav-link" href="{% url 'exams:exam' 'gate' %}">GATE</a>
+                    </nav>
+                </div>
+                <div class="col-8">
+                    {% block content %}
         
-        {% endblock content %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+
 
 
         <div class="basefoot">
