@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
+    path('', include('ReactHome.urls')),
     path('', include('authenticate.urls')),
     path('forum/', include('forums.urls')),
     path('friend/', include('friend.urls', namespace='friend')),
