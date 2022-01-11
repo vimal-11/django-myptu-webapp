@@ -2,10 +2,15 @@
 
 {% block content %}
 
-        
-        {% for field in fields %}
-            <p><a href="{{field.get_url}}">{{field}}</a></p>
-        {% endfor %}
+        <div class="container" >
+            {% for field in fields %}
+                <div class="row p-3 mb-2 bg-light border text-white rounded shadow-sm">
+                    <div class="col-sm">
+                        <a href="{{field.get_url}}">{{field}}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <br>
         {% if gate_syllabus is not None %}
             <table>
