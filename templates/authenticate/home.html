@@ -138,7 +138,7 @@
                                     {% if request.user.is_authenticated %}
                                     <a href="{% url 'authenticate:profilepage' request.user.pk %}">My Profile</a>
                                     {% else %}
-                                    <a href="{% url 'authenticate:login' %}">My Profile</a>
+                                    <a href="{% url 'authenticate:login' %}">Login</a>
                                     {% endif %}
                                 </li>
                                 <li class="navlink">

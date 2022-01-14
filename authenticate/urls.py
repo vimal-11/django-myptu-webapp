@@ -12,5 +12,6 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.activate, name="activate"),
     path('profile/<int:pk>', views.profile_view.as_view(), name="profilepage"),
     path('search/', views.account_search_view, name="search"),
+    path('profile/<user_id>/edit/info', views.edit_account_view, name="edit_account")
     #path('signup', views.MakeCreate.as_view(), name='signup'),
 ]
