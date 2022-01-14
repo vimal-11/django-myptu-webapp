@@ -23,6 +23,14 @@ class Feeds(models.Model):
                                         related_query_name = 'hitcount_generic_relation')
     tags = TaggableManager()
 
+    def __str__(self):
+        return self.author.username
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.author.username + self.body[:13])
+        super(Feeds, self).save(*args, **kwargs)
+
 
 class Comments(models.Model):
     author          = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comment_author')
@@ -42,7 +50,8 @@ class Comments(models.Model):
             return True
         return False
 
-
+    def __str__(self):
+        return self.author.username
 
 class Image(models.Model):
 	image           = models.ImageField(upload_to='uploads/post_photos', blank=True, null=True)
