@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.edit import UpdateView, DeleteView
 from .forms import PostForm, CommentForm
@@ -24,8 +25,9 @@ class PostListView(LoginRequiredMixin, View):
             'post_list': posts,
             'form': form,
         }
-
-        return render(request, 'feeds/post_list.html', context)
+        print(context)
+        return HttpResponse(context)
+        #return render(request, 'feeds/post_list.html', context)
 
     def post(self, request, *args, **kwargs):
         logged_in_user = request.user
@@ -51,8 +53,9 @@ class PostListView(LoginRequiredMixin, View):
             'post_list': posts,
             'form': form,
         }
-
-        return render(request, 'feeds/post_list.html', context)
+        print(context)
+        return HttpResponse(context)
+        #return render(request, 'feeds/post_list.html', context)
 
 
 class PostDetailView(LoginRequiredMixin, View):
@@ -67,8 +70,9 @@ class PostDetailView(LoginRequiredMixin, View):
             'form': form,
             'comments': comments,
         }
-
-        return render(request, 'feeds/post_detail.html', context)
+        print(context)
+        return HttpResponse(context)
+        #return render(request, 'feeds/post_detail.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         post = Feeds.objects.get(pk=pk)
@@ -89,5 +93,20 @@ class PostDetailView(LoginRequiredMixin, View):
             'form': form,
             'comments': comments,
         }
-        
-        return render(request, 'feeds/post_detail.html', context)
+        print(context)
+        return HttpResponse(context)
+        #return render(request, 'feeds/post_detail.html', context)
+
+
+class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Feeds
+    fields = ['body']
+    template_name = 'feeds/post_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post-detail', kwargs={'pk': pk})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author

@@ -5,7 +5,7 @@ from .models import Feeds, Comments
 
 class FeedsAdmin(admin.ModelAdmin):
     list_filter = ['author']
-    list_display = ['author__username', 'slug']
+    list_display = ['author', 'slug']
     search_fields = ['author__username', 'slug']
     readonly_fields = ['author',]
 
