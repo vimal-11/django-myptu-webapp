@@ -9,7 +9,6 @@ class PostForm(forms.ModelForm):
             attrs={'rows': '3',
                    'placeholder': 'Say Something...'}
         ))
-
     image = forms.ImageField(
         required=False,
         widget=forms.ClearableFileInput(attrs={
