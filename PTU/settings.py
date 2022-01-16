@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'exams.apps.ExamsConfig',
     'friend.apps.FriendConfig',
+    'workshops.apps.WorkshopsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
     "ckeditor", 
    
 ]
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 #SITE_ID = 1
 #for development using local host, make sure to use production domain in production
