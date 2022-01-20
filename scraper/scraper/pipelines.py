@@ -6,9 +6,18 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from bs4 import BeautifulSoup
 
 
 class ScraperPipeline:
     def process_item(self, item, spider):
         item.save()
+        return item
+class DescriptionPipeline:
+    def process_item(self, item, spider):
+        li = item['description']
+        item['description'] = ''
+        for x in li:
+            s = BeautifulSoup(x, features= 'html.parser')
+            item['description'] =item['description'] + ' ' +s.getText(separator=' ') 
         return item

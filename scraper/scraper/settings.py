@@ -19,7 +19,8 @@ import django
 django.setup()
 
 ITEM_PIPELINES = {
-    'scraper.pipelines.ScraperPipeline': 100,
+    'scraper.pipelines.DescriptionPipeline':100,
+    'scraper.pipelines.ScraperPipeline': 200,
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

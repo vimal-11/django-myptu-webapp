@@ -18,14 +18,12 @@ class WorkshopSpider(scrapy.Spider):
         item['category'] = "Science and Tech"
         item['price'] = (response.xpath('''/html/body/main/div[1]/div[4]/div/div[1]/div/div[2]/div/div[3]/div/text()''').extract())[0]
         item['workshop_title'] = (response.xpath('''/html/body/main/div[1]/div[4]/div/div[1]/div/div[2]/div/div[2]/h1/text()''').extract())[0]
-        z = response.xpath("/html/body/main/div[1]/div[4]/div/section[1]/div[1]/div/div/div[1]/div[2]/div[2]/div/div").extract()[0]
-        if(z):
-            item['description'] = z
+        item['description'] = response.xpath("/html/body/main/div[1]/div[4]/div/section[1]/div[1]/div/div/div[1]/div[2]/div[2]/div/div").extract()
+        item['date'] = ''
         for i in range(2):
             try:
                 k = response.xpath('''/html/body/main/div[1]/div[4]/div/section[1]/div[1]/div/div/div[2]/div/div[1]/time/p[''' +str(i+1)+''']/text()''').extract()[0]
-                item['date'] = k+ ' '
+                item['date'] = item['date']+ ' '+k
             except:
-                item['date']=''
+                item['date']=item['date']+''
         return item
-
