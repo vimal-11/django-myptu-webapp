@@ -12,7 +12,7 @@ from hitcount.models import HitCountMixin, HitCount
 
 
 class Feeds(models.Model):
-    author           = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='post_author', null=True)
+    author           = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='post_author')
     body             = RichTextField(blank=True)
     slug             = models.SlugField(max_length=400, unique=True, blank=True)
     posted_on        = models.DateTimeField(default=timezone.now)
@@ -24,11 +24,11 @@ class Feeds(models.Model):
     tags = TaggableManager()
 
     def __str__(self):
-        return self.author.username
+        return str(self.author)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.author.username + self.body[:13])
+            self.slug = slugify(str(self.author) + "-" + self.body[3:13])
         super(Feeds, self).save(*args, **kwargs)
 
 

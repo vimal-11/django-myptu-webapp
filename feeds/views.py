@@ -17,23 +17,19 @@ class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
         posts = Feeds.objects.filter(
-            author__profile__followers__in=[logged_in_user.id]
-        ).order_by('-created_on')
+            author=logged_in_user.id).order_by('-posted_on')
         form = PostForm()
-
         context = {
             'post_list': posts,
             'form': form,
         }
-        print(context)
         return HttpResponse(context)
         #return render(request, 'feeds/post_list.html', context)
 
     def post(self, request, *args, **kwargs):
         logged_in_user = request.user
         posts = Feeds.objects.filter(
-            author__profile__followers__in=[logged_in_user.id]
-        ).order_by('-created_on')
+            author=logged_in_user.id).order_by('-posted_on')
         form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist('image')
 
