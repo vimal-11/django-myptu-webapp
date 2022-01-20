@@ -23,3 +23,4 @@ class CommentsAdmin(admin.ModelAdmin):
     class Meta:
         model = Comments
 admin.site.register(Comments, CommentsAdmin)
+

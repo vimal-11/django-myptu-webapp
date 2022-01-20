@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 
 
-class ReacthomeConfig(AppConfig):
+class FeedsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ReactHome'
+    name = 'feeds'
+
