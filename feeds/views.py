@@ -10,7 +10,7 @@ from .models import Feeds, Comments, Image
 # Create your views here.
 
 def index(request):
-    return render(request, 'ReactHome/index.html')
+    return render(request, 'feeds/index.html')
 
 
 class PostListView(LoginRequiredMixin, View):
