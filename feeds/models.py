@@ -21,7 +21,7 @@ class Feeds(models.Model):
     image            = models.ManyToManyField('Image', blank=True)
     hitcount_generic = GenericRelation(HitCount, object_id_field='object_pk',
                                         related_query_name = 'hitcount_generic_relation')
-    tags = TaggableManager()
+    tags             = TaggableManager()
 
     def __str__(self):
         return str(self.author)
@@ -51,7 +51,7 @@ class Comments(models.Model):
         return False
 
     def __str__(self):
-        return self.author.username
+        return self.comment
 
 class Image(models.Model):
 	image           = models.ImageField(upload_to='uploads/post_photos', blank=True, null=True)

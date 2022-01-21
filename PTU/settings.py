@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'channels',
+    'rest_framework',
 
     'allauth',
     'allauth.account',
@@ -70,6 +71,11 @@ INSTALLED_APPS = [
     "ckeditor", 
    
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 #SITE_ID = 1
 #for development using local host, make sure to use production domain in production

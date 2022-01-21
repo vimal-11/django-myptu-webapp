@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.edit import UpdateView, DeleteView
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from feeds.serializers import CommentsSerializer, FeedsSerializer
 from .forms import PostForm, CommentForm
 from .models import Feeds, Comments, Image
 
@@ -13,17 +19,18 @@ def index(request):
     return render(request, 'feeds/index.html')
 
 
-class PostListView(LoginRequiredMixin, View):
+class PostListView(LoginRequiredMixin, APIView):
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
         posts = Feeds.objects.filter(
             author=logged_in_user.id).order_by('-posted_on')
         form = PostForm()
-        context = {
-            'post_list': posts,
-            'form': form,
-        }
-        return HttpResponse(context)
+        # context = {
+        #     'post_list': posts,
+        #     'form': form,
+        # }
+        serializer = FeedsSerializer(posts, many=True)
+        return Response(serializer.data)
         #return render(request, 'feeds/post_list.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -45,30 +52,39 @@ class PostListView(LoginRequiredMixin, View):
 
             new_post.save()
 
-        context = {
-            'post_list': posts,
-            'form': form,
-        }
-        print(context)
-        return HttpResponse(context)
+        # context = {
+        #     'post_list': posts,
+        #     'form': form,
+        # }
+        serializer = FeedsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         #return render(request, 'feeds/post_list.html', context)
 
 
-class PostDetailView(LoginRequiredMixin, View):
+class PostDetailView(LoginRequiredMixin, APIView):
     def get(self, request, pk, *args, **kwargs):
         post = Feeds.objects.get(pk=pk)
         form = CommentForm()
 
         comments = Comments.objects.filter(post=post).order_by('-created_on')
 
-        context = {
-            'post': post,
-            'form': form,
-            'comments': comments,
+        # context = {
+        #     'post': post,
+        #     'form': form,
+        #     'comments': comments,
+        # }
+        serializer_post = FeedsSerializer(post, many=False).data
+        serializer_comments = CommentsSerializer(comments, many=True).data
+        serializer = {
+            'post': serializer_post,
+            'comments': serializer_comments
         }
-        print(context)
-        return HttpResponse(context)
-        #return render(request, 'feeds/post_detail.html', context)
+
+        return Response(serializer)
+
 
     def post(self, request, pk, *args, **kwargs):
         post = Feeds.objects.get(pk=pk)
@@ -82,16 +98,23 @@ class PostDetailView(LoginRequiredMixin, View):
 
         comments = Comments.objects.filter(post=post).order_by('-created_on')
 
-        #notification = Notification.objects.create(notification_type=2, from_user=request.user, to_user=post.author, post=post)
-
-        context = {
-            'post': post,
-            'form': form,
-            'comments': comments,
-        }
-        print(context)
-        return HttpResponse(context)
-        #return render(request, 'feeds/post_detail.html', context)
+        # notification = Notification.objects.create(notification_type=2, from_user=request.user, to_user=post.author, post=post)
+        # context = {
+        #     'post': post,
+        #     'form': form,
+        #     'comments': comments,
+        # }
+        serializer_comments = CommentsSerializer(data=request.data)
+        if serializer_comments.is_valid():
+            serializer_comments.save()
+            serializer_post = FeedsSerializer(post, many=False).data
+            serializer_comments = CommentsSerializer(comments, many=True).data
+            serializer = {
+                'post': serializer_post,
+                'comments': serializer_comments
+            }
+            return Response(serializer, status=status.HTTP_201_CREATED)
+        return Response(serializer_comments.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
