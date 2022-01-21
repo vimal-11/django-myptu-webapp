@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'tinymce',
     'hitcount',
     "taggit",
+    'taggit_serializer',
     "ckeditor", 
    
 ]

@@ -1,8 +1,12 @@
 from attr import field
 from rest_framework import serializers
 from feeds.models import Feeds, Comments
+from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 
-class FeedsSerializer(serializers.ModelSerializer):
+class FeedsSerializer(TaggitSerializer, serializers.ModelSerializer):
+    #image = serializers.SerializerMethodField()
+    tags = TagListSerializerField()
+
     class Meta:
         model = Feeds
         fields = ['id', 
@@ -12,7 +16,7 @@ class FeedsSerializer(serializers.ModelSerializer):
                   'likes', 
                   'image', 
                   'hide_post', 
-                  #'tags', 
+                  'tags', 
                  # 'hitcount_generic'
                  ]
 

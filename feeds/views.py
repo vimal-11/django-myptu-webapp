@@ -40,25 +40,26 @@ class PostListView(LoginRequiredMixin, APIView):
         form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist('image')
 
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.author = request.user
-            new_post.save()
+        # if form.is_valid():
+        #     new_post = form.save(commit=False)
+        #     new_post.author = request.user
+        #     new_post.save()
 
-            for f in files:
-                img = Image(image=f)
-                img.save()
-                new_post.image.add(img)
+        #     for f in files:
+        #         img = Image(image=f)
+        #         img.save()
+        #         new_post.image.add(img)
 
-            new_post.save()
+        #     new_post.save()
 
-        # context = {
-        #     'post_list': posts,
-        #     'form': form,
-        # }
+        # # context = {
+        # #     'post_list': posts,
+        # #     'form': form,
+        # # }
         serializer = FeedsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            serializer = FeedsSerializer(posts, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         #return render(request, 'feeds/post_list.html', context)
