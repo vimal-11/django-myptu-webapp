@@ -9,6 +9,7 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework import viewsets, filters, generics
 from authenticate.models import Account
 from feeds.serializers import CommentsSerializer, FeedsSerializer
 from .forms import PostForm, CommentForm
@@ -152,3 +153,22 @@ class OwnerPostsView(LoginRequiredMixin, APIView):
             serializer = FeedsSerializer(posts, many=True)
             return Response(serializer.data)
         return HttpResponse("you are not authorized to this view.")
+
+class DeletePost(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
+    serializer_class = FeedsSerializer
+    queryset = Feeds.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs['pk']
+        post_author = Feeds.objects.get(pk = pk).author
+        if post_author == request.user:
+            return self.retrieve(request, *args, **kwargs)
+        return HttpResponse("This is not your post to delete.")
+
+'''
+RetrieveDestroyAPIView:
+----------------------
+Used for read or delete endpoints to represent a single model instance.
+Provides get and delete method handlers.
+Extends: GenericAPIView, RetrieveModelMixin, DestroyModelMixin
+'''
