@@ -22,3 +22,4 @@ class CommentsAdmin(admin.ModelAdmin):
         model = Comments
 admin.site.register(Comments, CommentsAdmin)
 
+# admin.site.register(Image)
