@@ -154,16 +154,31 @@ class OwnerPostsView(LoginRequiredMixin, APIView):
             return Response(serializer.data)
         return HttpResponse("you are not authorized to this view.")
 
-class DeletePost(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
+
+class PostEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
     serializer_class = FeedsSerializer
     queryset = Feeds.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        pk = self.kwargs['pk']
-        post_author = Feeds.objects.get(pk = pk).author
-        if post_author == request.user:
-            return self.retrieve(request, *args, **kwargs)
-        return HttpResponse("This is not your post to delete.")
+    def get_queryset(self, *args, **kwargs):
+        post = self.kwargs['pk']
+        post_author = Feeds.objects.get(pk = post).author
+        print(post_author, self.request.user)
+        if post_author == self.request.user:
+            queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
+            return queryset
+
+
+class PostDeleteView(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
+    serializer_class = FeedsSerializer
+    queryset = Feeds.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        post = self.kwargs['pk']
+        post_author = Feeds.objects.get(pk = post).author
+        print(post_author, self.request.user)
+        if post_author == self.request.user:
+            queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
+            return queryset
 
 '''
 RetrieveDestroyAPIView:
@@ -171,4 +186,12 @@ RetrieveDestroyAPIView:
 Used for read or delete endpoints to represent a single model instance.
 Provides get and delete method handlers.
 Extends: GenericAPIView, RetrieveModelMixin, DestroyModelMixin
+
+RetrieveUpdateAPIView:
+----------------------
+Used for read or update endpoints to represent a single model instance.
+Provides get, put and patch method handlers.
+Extends: GenericAPIView, RetrieveModelMixin, UpdateModelMixin
+
 '''
+
