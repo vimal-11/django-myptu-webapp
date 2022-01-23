@@ -152,6 +152,9 @@ class PostCreateView(LoginRequiredMixin, generics.CreateAPIView):
 
 
 class PostEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
+    """
+        Concrete view for retrieving, updating a model instance.
+    """
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     serializer_class = FeedsSerializer
     queryset = Feeds.objects.all()
@@ -176,6 +179,21 @@ class PostDeleteView(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
         if post_author == self.request.user:
             queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
             return queryset
+
+
+class CommentEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
+    """
+        Concrete view for retrieving, updating a model instance.
+    """
+    serializer_class = CommentsSerializer
+    queryset = Comments.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        post = self.kwargs['post_id']
+        queryset = Comments.objects.filter(author=self.request.user.id, post=post)
+        print(self.request.user.id, queryset, self.kwargs)
+        return queryset
+        
 
 class CommentDeleteView(LoginRequiredMixin, generics.DestroyAPIView):
     """
