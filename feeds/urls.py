@@ -8,6 +8,7 @@ urlpatterns = [
     #path('',views.index, name="feeds"),
     path('', views.PostListView.as_view(), name='post-list'),
     path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
+    path('post/create/', views.PostCreateView.as_view(), name='post-create'),
     path('post/edit/<int:pk>/', views.PostEditView.as_view(), name='post-edit'),
     path('<int:user_id>/', views.OwnerPostsView.as_view(), name='my-posts'),
     path('post/delete/<int:pk>/', views.PostDeleteView.as_view(), name='post-delete'),
