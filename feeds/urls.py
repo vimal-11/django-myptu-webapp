@@ -12,6 +12,7 @@ urlpatterns = [
     path('post/edit/<int:pk>/', views.PostEditView.as_view(), name='post-edit'),
     path('<int:user_id>/', views.OwnerPostsView.as_view(), name='my-posts'),
     path('post/delete/<int:pk>/', views.PostDeleteView.as_view(), name='post-delete'),
+    path('post/<int:post_id>/comment/delete/<int:pk>/', views.CommentDeleteView.as_view(), name='comment-delete'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

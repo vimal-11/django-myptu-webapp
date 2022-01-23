@@ -152,6 +152,7 @@ class PostCreateView(LoginRequiredMixin, generics.CreateAPIView):
 
 
 class PostEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
     serializer_class = FeedsSerializer
     queryset = Feeds.objects.all()
 
@@ -176,6 +177,21 @@ class PostDeleteView(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
             queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
             return queryset
 
+class CommentDeleteView(LoginRequiredMixin, generics.DestroyAPIView):
+    """
+        Concrete view for deleting a model instance.
+    """
+    serializer_class = CommentsSerializer
+    queryset = Comments.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        post = self.kwargs['post_id']
+        queryset = Comments.objects.filter(author=self.request.user.id, post=post)
+        print(self.request.user.id, queryset, self.kwargs)
+        return queryset
+
+
+
 '''
 CreateAPIView
 --------------------
@@ -183,17 +199,24 @@ Used for create-only endpoints.
 Provides a post method handler.
 Extends: GenericAPIView, CreateModelMixin
 
-RetrieveDestroyAPIView:
+RetrieveDestroyAPIView
 ----------------------
 Used for read or delete endpoints to represent a single model instance.
 Provides get and delete method handlers.
 Extends: GenericAPIView, RetrieveModelMixin, DestroyModelMixin
 
-RetrieveUpdateAPIView:
+RetrieveUpdateAPIView
 ----------------------
 Used for read or update endpoints to represent a single model instance.
 Provides get, put and patch method handlers.
 Extends: GenericAPIView, RetrieveModelMixin, UpdateModelMixin
 
+DestroyAPIView
+----------------------
+Used for delete-only endpoints for a single model instance.
+Provides a delete method handler.
+Extends: GenericAPIView, DestroyModelMixin
+
+https://github.com/encode/django-rest-framework/blob/master/rest_framework/generics.py
 '''
 

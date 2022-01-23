@@ -29,7 +29,7 @@ class Feeds(models.Model):
     tags             = TaggableManager(blank=True)
 
     def __str__(self):
-        return str(self.author)
+        return str(self.id) + '-' + self.slug
 
     def save(self, *args, **kwargs):
         if not self.slug:
