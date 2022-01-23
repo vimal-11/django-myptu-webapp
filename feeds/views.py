@@ -62,6 +62,8 @@ class PostListView(LoginRequiredMixin, APIView):
         # }
         print(request, request.POST, request.FILES)
         print("data: ",request.data)
+        if 'author' not in request.data.keys():
+            request.data['author'] = logged_in_user.id
         # image = request.data['image']
         # del request.data['image']
         # request.data['image'] = []
@@ -70,12 +72,14 @@ class PostListView(LoginRequiredMixin, APIView):
         #     img_model.save()
         #     request.data['image'].append(img_model.id)
         # print("image model: ", request.data)
-        serializer = FeedsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            serializer = FeedsSerializer(posts, many=True)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if logged_in_user.id == request.data['author'] or logged_in_user == request.data['author']:
+            serializer = FeedsSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                serializer = FeedsSerializer(posts, many=True)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response("You don't have access.", status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostDetailView(LoginRequiredMixin, APIView):
