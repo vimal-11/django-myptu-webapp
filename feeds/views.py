@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import viewsets, filters, generics
 from authenticate.models import Account
+from friend.models import FriendList
 from feeds.serializers import CommentsSerializer, FeedsSerializer
 from .forms import PostForm, CommentForm
 from .models import Feeds, Comments
@@ -26,18 +27,22 @@ class PostListView(LoginRequiredMixin, APIView):
 
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
+        followed_people = FriendList.objects.filter(user=logged_in_user).values('friends')
+        print(followed_people)
         posts = Feeds.objects.filter(
-            author=logged_in_user.id).order_by('-posted_on')
-        form = PostForm()
+            author__in=followed_people).order_by('-posted_on')
+        # form = PostForm()
         serializer = FeedsSerializer(posts, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         logged_in_user = request.user
+        followed_people = FriendList.objects.filter(user=logged_in_user).values('friends')
+        print(followed_people)
         posts = Feeds.objects.filter(
-            author=logged_in_user.id).order_by('-posted_on')
-        form = PostForm(request.POST, request.FILES)
-        files = request.FILES.getlist('image')
+            author__in=followed_people).order_by('-posted_on')
+        # form = PostForm(request.POST, request.FILES)
+        # files = request.FILES.getlist('image')
 
         # if form.is_valid():
         #     new_post = form.save(commit=False)
@@ -51,10 +56,10 @@ class PostListView(LoginRequiredMixin, APIView):
 
         #     new_post.save()
 
-        # # context = {
-        # #     'post_list': posts,
-        # #     'form': form,
-        # # }
+        # context = {
+        #     'post_list': posts,
+        #     'form': form,
+        # }
         print(request, request.POST, request.FILES)
         print("data: ",request.data)
         # image = request.data['image']

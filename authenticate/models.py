@@ -82,7 +82,9 @@ class Account(AbstractBaseUser):
 
 @receiver(post_save, sender=Account)
 def user_save(sender, instance, **kwargs):
-    FriendList.objects.get_or_create(user=instance)
+    frndlist, frndlistcrt = FriendList.objects.get_or_create(user=instance)
+    frndlist.friends.add(instance)
+    frndlist.save()
 
 # class users(models.Model):
 #     username = models.CharField(max_length=20,default='')
