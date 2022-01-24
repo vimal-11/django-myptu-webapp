@@ -10,7 +10,6 @@ from rest_framework import viewsets, filters, generics
 from authenticate.models import Account
 from friend.models import FriendList
 from feeds.serializers import CommentsSerializer, FeedsSerializer
-from .forms import PostForm, CommentForm
 from .models import Feeds, Comments
 
 # Create your views here.
@@ -181,6 +180,27 @@ class PostDeleteView(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
             return queryset
 
 
+class CommentCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
+    """
+        Concrete view for retrieving, updating a model instance.
+    """
+    serializer_class = CommentsSerializer
+    queryset = Comments.objects.all()
+
+    def get_queryset(self, *args, **kwargs):
+        post = self.kwargs['post_id']
+        queryset = Comments.objects.filter(post=post)
+        print(self.request.user.id, queryset, self.kwargs)
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        post = kwargs.get('post_id')
+        print(post, request.data['author'], request.data['comment'], request.data['post'], request.user.id)
+        if str(post) != str(request.data['post']) or str(request.user.id) != str(request.data['author']):
+            return Response("you are not authorized for this comment.", status=status.HTTP_400_BAD_REQUEST)
+        return self.create(request, *args, **kwargs)
+    
+
 class CommentEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
     """
         Concrete view for retrieving, updating a model instance.
@@ -193,7 +213,7 @@ class CommentEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
         queryset = Comments.objects.filter(author=self.request.user.id, post=post)
         print(self.request.user.id, queryset, self.kwargs)
         return queryset
-        
+
 
 class CommentDeleteView(LoginRequiredMixin, generics.DestroyAPIView):
     """
@@ -216,6 +236,12 @@ CreateAPIView
 Used for create-only endpoints.
 Provides a post method handler.
 Extends: GenericAPIView, CreateModelMixin
+
+ListCreateAPIView
+----------------------
+Used for read-write endpoints to represent a collection of model instances.
+Provides get and post method handlers.
+Extends: GenericAPIView, ListModelMixin, CreateModelMixin
 
 RetrieveDestroyAPIView
 ----------------------
