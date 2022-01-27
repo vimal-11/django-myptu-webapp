@@ -24,11 +24,15 @@ from friend.request_status import FriendRequestStatus
 from friend.utils import get_friend_request_or_false
 from . tokens import generate_token
 
+import logging
+
+logger = logging.getLogger('django')
 
 # Create your views here.
 
 
 def home(request):
+    logger.info("home page view")
     return render(request, "authenticate/home.html")
 
 

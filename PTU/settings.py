@@ -211,7 +211,45 @@ MESSAGE_TAGS = {
         messages.SUCCESS: 'alert-success',
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
- }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'file2', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './logs/logs.log',
+            'formatter': 'verbose',
+        },
+        'file2': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './logs/debug.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO',
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        }
+    }
+}
+
 
 TAGGIT_CASE_INSENSITIVE = True
 
