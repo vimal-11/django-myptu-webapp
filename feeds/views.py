@@ -1,6 +1,4 @@
-from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
@@ -19,20 +17,22 @@ class PostListView(LoginRequiredMixin, APIView):
 
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
-        followed_people = FriendList.objects.filter(user=logged_in_user).values('friends')
+        followed_people = FriendList.objects.filter(
+                                    user=logged_in_user).values('friends')
         print(followed_people)
         posts = Feeds.objects.filter(
-            author__in=followed_people).order_by('-posted_on')
+                              author__in=followed_people).order_by('-posted_on')
         # form = PostForm()
         serializer = FeedsSerializer(posts, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         logged_in_user = request.user
-        followed_people = FriendList.objects.filter(user=logged_in_user).values('friends')
+        followed_people = FriendList.objects.filter(
+                                    user=logged_in_user).values('friends')
         print(followed_people)
         posts = Feeds.objects.filter(
-            author__in=followed_people).order_by('-posted_on')
+                              author__in=followed_people).order_by('-posted_on')
         # form = PostForm(request.POST, request.FILES)
         # files = request.FILES.getlist('image')
 
@@ -52,8 +52,7 @@ class PostListView(LoginRequiredMixin, APIView):
         #     'post_list': posts,
         #     'form': form,
         # }
-        print(request, request.POST, request.FILES)
-        print("data: ",request.data)
+        print(request, request.POST, request.FILES, request.data)
         if 'author' not in request.data.keys():
             request.data['author'] = logged_in_user.id
         # image = request.data['image']
@@ -90,12 +89,7 @@ class PostDetailView(LoginRequiredMixin, APIView):
 
     def post(self, request, pk, *args, **kwargs):
         post = Feeds.objects.get(pk=pk)
-        # form = CommentForm(request.POST)
-        # if form.is_valid():
-        #     new_comment = form.save(commit=False)
-        #     new_comment.author = request.user
-        #     new_comment.post = post
-        #     new_comment.save()
+        # need to check for post and author of the comment...pending
         comments = Comments.objects.filter(post=post).order_by('-created_on')
         serializer_comments = CommentsSerializer(data=request.data)
         if serializer_comments.is_valid():
@@ -110,20 +104,6 @@ class PostDetailView(LoginRequiredMixin, APIView):
         return Response(serializer_comments.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-#     model = Feeds
-#     fields = ['body']
-#     template_name = 'feeds/post_edit.html'
-
-#     def get_success_url(self):
-#         pk = self.kwargs['pk']
-#         return reverse_lazy('post-detail', kwargs={'pk': pk})
-
-#     def test_func(self):
-#         post = self.get_object()
-#         return self.request.user == post.author
-
-
 class OwnerPostsView(LoginRequiredMixin, APIView):
     def get(self, request, user_id=None):
         user = request.user
@@ -136,7 +116,8 @@ class OwnerPostsView(LoginRequiredMixin, APIView):
                                  author=owner.id).order_by('-posted_on')
             serializer = FeedsSerializer(posts, many=True)
             return Response(serializer.data)
-        return Response("you are not authorized to this view.", status=status.HTTP_400_BAD_REQUEST)
+        return Response("you are not authorized to this view.", 
+                                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostCreateView(LoginRequiredMixin, generics.CreateAPIView):
@@ -163,7 +144,8 @@ class PostEditView(LoginRequiredMixin, generics.RetrieveUpdateAPIView):
         post_author = Feeds.objects.get(pk = post).author
         print(post_author, self.request.user)
         if post_author == self.request.user:
-            queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
+            queryset = Feeds.objects.filter(
+                              author=self.request.user.id).order_by('-posted_on')
             return queryset
 
 
@@ -176,7 +158,8 @@ class PostDeleteView(LoginRequiredMixin, generics.RetrieveDestroyAPIView):
         post_author = Feeds.objects.get(pk = post).author
         print(post_author, self.request.user)
         if post_author == self.request.user:
-            queryset = Feeds.objects.filter(author=self.request.user.id).order_by('-posted_on')
+            queryset = Feeds.objects.filter(
+                              author=self.request.user.id).order_by('-posted_on')
             return queryset
 
 
@@ -195,9 +178,11 @@ class CommentCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         post = kwargs.get('post_id')
-        print(post, request.data['author'], request.data['comment'], request.data['post'], request.user.id)
+        print(post, request.data['author'], request.data['comment'], 
+                                            request.data['post'], request.user.id)
         if str(post) != str(request.data['post']) or str(request.user.id) != str(request.data['author']):
-            return Response("you are not authorized for this comment.", status=status.HTTP_400_BAD_REQUEST)
+            return Response("you are not authorized for this comment.", 
+                                              status=status.HTTP_400_BAD_REQUEST)
         return self.create(request, *args, **kwargs)
     
 
