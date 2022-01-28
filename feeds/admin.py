@@ -5,10 +5,9 @@ from .models import Feeds, Comments
 
 class FeedsAdmin(admin.ModelAdmin):
     list_filter = ['author']
-    list_display = ['author', 'slug']
-    search_fields = ['author__username', 'slug']
-    readonly_fields = ['author',]
-
+    list_display = ['author', 'slug', 'posted_on']
+    search_fields = ['author', 'slug', 'body']
+    
     class Meta:
         model = Feeds
 
@@ -16,11 +15,11 @@ admin.site.register(Feeds, FeedsAdmin)
 
 class CommentsAdmin(admin.ModelAdmin):
     list_filter = ['author', 'post']
-    list_display = ['author', 'post']
-    search_fields = ['author__username', 'post']
-    readonly_fields = ['id']
+    list_display = ['author', 'post', 'comment']
+    search_fields = ['author__username', 'post', 'comment']
 
     class Meta:
         model = Comments
 admin.site.register(Comments, CommentsAdmin)
 
+# admin.site.register(Image)

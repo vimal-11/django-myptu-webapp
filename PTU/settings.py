@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'exams.apps.ExamsConfig',
     'friend.apps.FriendConfig',
-    'ReactHome.apps.ReacthomeConfig',
+    'feeds.apps.FeedsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'channels',
+    'rest_framework',
 
     'allauth',
     'allauth.account',
@@ -67,9 +68,15 @@ INSTALLED_APPS = [
     'tinymce',
     'hitcount',
     "taggit",
+    'taggit_serializer',
     "ckeditor", 
    
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 #SITE_ID = 1
 #for development using local host, make sure to use production domain in production
@@ -186,7 +193,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')

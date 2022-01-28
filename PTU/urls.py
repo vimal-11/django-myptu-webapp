@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('feeds/', include('ReactHome.urls', namespace='feeds')),
+    path('feeds/', include('feeds.urls', namespace='feeds')),
     path('', include('authenticate.urls')),
     path('forum/', include('forums.urls')),
     path('friend/', include('friend.urls', namespace='friend')),
@@ -61,3 +63,4 @@ urlpatterns = [
 
 
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
