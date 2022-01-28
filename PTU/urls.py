@@ -29,6 +29,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('chat/', include('chat.urls', namespace='chat')),
     path('exam/', include('exams.urls')),
+    path('workshops/',include('workshops.urls')),
 
      # Password reset links 
      # https://github.com/django/django/blob/master/django/contrib/auth/views.py
