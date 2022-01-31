@@ -6,66 +6,112 @@
         <title>MyPTU - Exams</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static '/css/forumstyle.css' %}">
+        <!--<link rel="stylesheet" href="{% static '/css/forumstyle.css' %}">-->
+        <link rel="stylesheet" href="{% static '/css/index.css' %}">
+        <link rel="stylesheet" href="{% static '/css/base.css' %}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Including the bootstrap CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <style>
+            .logo{
+                font-size: 20px !important; 
+                font-family: "Roboto", Arial, Helvetica, sans-serif !important;
+                font-weight: bolder;
+                letter-spacing: 1.5px;
+                color: var(--color-theme-blue) !important;
+            }
+            .nav-link{
+                color: var(--color-nav-link-grey) !important;
+                font-weight: bold;
+            }
+            .nav-link:hover{
+                color: var(--color-theme-blue) !important;
+                transform: scale(1.03);
+            }
+
+            .nav-link.active {
+                color: #0080FF;
+            }
+
+            @media screen and (max-width: 460px){
+                .form-control{
+                    display: none;
+                }
+            }
+
+        </style>
+
         <div class="head">         
-            <div class="navbar">
-                <nav class="forum-nav">
-                    <ul class="logo">
-                        <li>MyPTU <span style="color:#5f6368">Exams</span></li>
-                    </ul>
-                    <div class="res-nav">
-                        <div class="l1"></div>
-                        <div class="l2"></div>
-                        <div class="l3"></div>
+            <nav class="navbar navbar-expand-lg navbar-light" >
+                <div class="container-fluid">
+                    <a class="navbar-brand logo" href="">MyPTU <span style="color:var(--color-nav-link-grey)">Exams</span></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ml-auto" style="color: var(--color-nav-link-grey)">
+                        <li class="nav-item nav-lnk">
+                            <a class="nav-link" href="{% url 'authenticate:home' %}">Home</a>
+                            </li>
+                        <li class="nav-item nav-lnk">
+                            <a class="nav-link" href="{% url 'forums:forum' %}">Categories</a>
+                        </li>
+                        <li class="nav-item nav-lnk">
+                            <a class="nav-link" href="{% url 'authenticate:profilepage' request.user.id %}">Profile</a>
+                        </li>
+                        <li class="nav-item nav-lnk">
+                            {% if request.user.is_authenticated %}
+                                <a class="nav-link" aria-current="page" href="{% url 'authenticate:logout' %}" method="POST">Logout</a>
+                            {% else %}
+                                <a class="nav-link" aria-current="page" href="{% url 'authenticate:login' %}?next={{ request.path }}" method="POST">Login</a>
+                            {% endif %}
+                        </li>
+                        </ul>
                     </div>
-                    <ul class="nav-list">
-                        <li class="nav-lnk">
-                        {% if request.user.is_authenticated %}
-                            <a href="{% url 'authenticate:logout' %}" method="POST">Logout</a>
-                        {% else %}
-                            <a href="{% url 'authenticate:login' %}?next={{ request.path }}" method="POST">Login</a>
-                        {% endif %}
-                        </li>
-                        <li class="nav-lnk">
-                            <a href="{% url 'forums:forum' %}">Categories</a>
-                        </li>
-                        <li class="nav-lnk">
-                            <a href="#">Profile</a>
-                        </li>
-                        <li class="nav-lnk">
-                            <a href="{% url 'authenticate:home' %}">Home</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </div>
-        <!--Search Box-->
+        <!--Search Box
         <div class="search-box">
 
-        <form action="{% url 'forums:search_results' %}" method="GET">
-    
-            <select name="search-box" id="">
-                <option value="title">Title</option>
-                <option value="category">Category</option>
-            </select>
-            <input type="text"  class="main-search" name="keyword" id="" placeholder="Search">
-            <div class="search-but">
-                <button type="submit" name="search-sub"><i class="material-icons">search</i></button>
-                <input type="text"  class="res-search" name="keyword-mob" id="" placeholder="Search">
+        <form action="#" method="GET">
+            <div class="col-5 input-group mb-3 mx-auto">
+                <input type="text" class="form-control" name="keyword" id="" placeholder="Search">
+                <div class=" col-3 input-group-append ">
+                    <button type="submit" name="search-sub"><i class="material-icons">search</i></button>
+                    <input type="text"  class="res-search" name="keyword-mob" id="" placeholder="Search">
+                </div>
             </div>
         </form>
-
+    -->
         </div>
 
-        {% block content %}
+        <div class="container" >
+            <div class="row">
+                <div class="col-2">
+                    <nav class="nav flex-column bd-links border-right">
+                        <a class="nav-link active" aria-current="page" href="{% url 'exams:exam' 'upsc' %}">UPSC</a>
+                        <a class="nav-link" href="{% url 'exams:exam' 'cat' %}">CAT</a>
+                        <a class="nav-link" href="{% url 'exams:exam' 'gate' %}">GATE</a>
+                    </nav>
+                </div>
+                <div class="col-8">
+                    {% block content %}
         
-        {% endblock content %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
 
 
-        <div class="footer">
+
+        <div class="basefoot">
         
         </div>
         
