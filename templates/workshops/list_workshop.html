@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MyPTU-Workshops</title>
-    </head>
-    <body>
+{% extends "workshops/base.html" %}
+
+{% block content %}
+    
         <div>
             {% for obj in page_obj %}
-            {{obj.workshop_title}}<br>
+            <a href="{% url 'workshops:workshop' slug=obj.slug %}">
+                {{obj.workshop_title}}
+            </a> - {{ obj.category }}<br><br>
             {% endfor %}
         </div>
         <div>
@@ -19,5 +19,5 @@
                 <a href="?page={{page_obj.next_page_number}}">Next</a>
             {% endif %}
         </div>
-    </body>
-</html>
+
+{% endblock content %}

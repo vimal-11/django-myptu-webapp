@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "workshops/base.html" %}
+
+{% block content %}
+
         <title>
             {{workshops.workshop_title}}
         </title>
-    </head>
-    <body>
+
         <div>
             {{workshops.workshop_title}}<br>
         </div>
@@ -13,5 +13,5 @@
             Description: <br>
             {{workshops.description}}
         </div>
-    </body>
-</html>
+
+{% endblock content %}
