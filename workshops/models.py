@@ -7,7 +7,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Workshop(models.Model):
-    workshop_title = models.CharField(max_length = 100)
+    workshop_title = models.CharField(max_length = 100,unique=True)
     description=models.TextField()
     slug = models.SlugField(max_length=50,unique=True,blank=True)
     category = models.CharField(max_length = 100)
@@ -24,6 +24,7 @@ class Workshop(models.Model):
         if not self.slug:
             self.slug = slugify(self.workshop_title)
         super(Workshop, self).save(*args, **kwargs)
+    
 
 class Registered_workshop(models.Model):
     userid = models.ForeignKey(settings.AUTH_USER_MODEL,related_name = 'registered_user',on_delete = models.CASCADE,null = True)

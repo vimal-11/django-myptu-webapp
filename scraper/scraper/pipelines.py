@@ -11,7 +11,8 @@ from bs4 import BeautifulSoup
 
 class ScraperPipeline:
     def process_item(self, item, spider):
-        item.save()
+        if item['date']:
+            item.save()
         return item
 class DescriptionPipeline:
     def process_item(self, item, spider):
