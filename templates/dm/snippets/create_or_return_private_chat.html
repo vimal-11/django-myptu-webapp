@@ -12,9 +12,10 @@
 			data: payload,
 			timeout: 5000,
 			success: function(data) {
-				console.log("SUCCESS", data)
+				console.log("SUCCESS Data", data)
 				if(data['response'] == "Successfully got the chat."){
-					chatroomId = data['chatroom_id']
+					console.log("SUCCESS open")
+                    chatroomId = data['chatroom_id']
 					OnGetOrCreateChatroomSuccess(chatroomId)
 				}
 				else if(data['response'] != null){
@@ -30,6 +31,7 @@
 
 
 	function OnGetOrCreateChatroomSuccess(chatroomId){
+            console.log("SUCCESS open", chatroomId)
 			var url = "{% url 'dm:private-chat-room' %}?room_id=" + chatroomId
 			var win = window.location.replace(url)
 			// window.open(url) // for new tab

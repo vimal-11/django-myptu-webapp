@@ -17,7 +17,7 @@ from authenticate.models import Account
 
 
 class DmConsumer(AsyncJsonWebsocketConsumer):
-
+    print("here it is calling dmconsumer")
     async def connect(self):
         """
         Called when the websocket is handshaking as part of initial connection.

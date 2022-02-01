@@ -12,17 +12,33 @@ import os
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from channels.security.websocket import AllowedHostsOriginValidator
+from django.urls import path, re_path
 import chat.routing
-import dm.routing
+from dm.consumers import DmConsumer
+from chat.consumers import ChatConsumer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PTU.settings")
 
 application = ProtocolTypeRouter({
   "http": get_asgi_application(),
   "websocket": AuthMiddlewareStack(
-        URLRouter([
-            chat.routing.websocket_urlpatterns,
-            dm.routing.websocket_urlpatterns
-        ])
+        URLRouter(
+            chat.routing.websocket_urlpatterns
+            #dm.routing.websocket_urlpatterns
+        )
     ),
 })
+
+# application = ProtocolTypeRouter({
+#     #"http": get_asgi_application(),
+# 	'websocket': AllowedHostsOriginValidator(
+# 		AuthMiddlewareStack(
+# 			URLRouter([
+# 					#path('', NotificationConsumer),
+# 					path('dm/<room_id>/', DmConsumer),
+# 					path('chat/<room_name>/', ChatConsumer),
+# 			])
+# 		)
+# 	),
+# })

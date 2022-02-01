@@ -257,9 +257,8 @@
 		{% endif %}
 		
 		
-		// console.log("Connecting to " + ws_path);
+		console.log("Connecting to " + ws_path);
 		chatSocket = new WebSocket(ws_path);
-
 		// Handle incoming messages
 		chatSocket.onmessage = function(message) {
 			// Decode the JSON
