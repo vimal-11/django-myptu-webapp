@@ -16,4 +16,6 @@ def ListView(request):
     page_obj = Paginator.get_page(paginator,page)
     return render(request,'workshops/list_workshop.html',{'page_obj':page_obj})
 
-    
+def WorkshopView(request,slug):
+    workshops = get_object_or_404(Workshop,slug=slug)
+    return render(request,'workshops/workshop.html',{'workshops':workshops})
