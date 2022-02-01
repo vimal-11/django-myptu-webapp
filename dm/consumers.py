@@ -16,7 +16,7 @@ from dm.constants import *
 from authenticate.models import Account
 
 
-class ChatConsumer(AsyncJsonWebsocketConsumer):
+class DmConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):
         """

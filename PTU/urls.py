@@ -28,6 +28,7 @@ urlpatterns = [
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
     path('accounts/', include('allauth.urls')),
     path('chat/', include('chat.urls', namespace='chat')),
+    path('dm/', include('dm.urls', namespace='dm')),
     path('exam/', include('exams.urls')),
 
      # Password reset links 
