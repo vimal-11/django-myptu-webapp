@@ -16,6 +16,7 @@ from authenticate.models import Account
 from dm.models import PrivateChatRoom, RoomChatMessage
 from dm.utils import find_or_create_private_chat
 
+DEBUG = True
 
 def private_chat_room_view(request, *args, **kwargs):
 	room_id = request.GET.get("room_id")
@@ -33,7 +34,7 @@ def private_chat_room_view(request, *args, **kwargs):
 	context["BASE_URL"] = settings.BASE_URL
 	if room_id:
 		context["room_id"] = room_id
-	#context['debug'] = DEBUG
+	context['debug'] = DEBUG
 	context['debug_mode'] = settings.DEBUG
 	return render(request, "dm/room.html", context)
 
