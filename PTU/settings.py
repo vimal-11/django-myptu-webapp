@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'exams.apps.ExamsConfig',
     'friend.apps.FriendConfig',
+    'dm.apps.DmConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
