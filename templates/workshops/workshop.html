@@ -12,11 +12,13 @@
         <br>
         <div>
             Description: <br>
-            {{workshops.description}}
+            {{workshops.description | safe}}
         </div>
         <br>
         <div>
-            Date:{{workshops.date}}
+            {% if Date %}
+                Date:{{workshops.date}}
+            {% endif %}
         </div>
         <br>
         <div>

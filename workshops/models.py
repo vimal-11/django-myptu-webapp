@@ -7,7 +7,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Workshop(models.Model):
-    workshop_title = models.CharField(max_length = 100,unique=True)
+    workshop_title = models.CharField(max_length = 100)
     description=models.TextField()
     slug = models.SlugField(max_length=50,unique=True,blank=True)
     category = models.CharField(max_length = 100)
