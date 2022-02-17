@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'channels',
     'rest_framework',
+    "corsheaders",
 
     'allauth',
     'allauth.account',
@@ -90,6 +91,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'PTU.urls'
@@ -222,3 +225,9 @@ TAGGIT_CASE_INSENSITIVE = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 BASE_URL = 'http://127.0.0.1:8000'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://192.168.1.7:3000"
+]

@@ -15,6 +15,7 @@ class PostForm(forms.ModelForm):
             'multiple': True
             })
     )
+   
 
     class Meta:
         model = Feeds
