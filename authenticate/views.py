@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.urls.base import reverse
 from django.views import View
-from authenticate.models import Account
 from django.contrib import messages
 from django.forms import modelformset_factory
 from django.core.mail import send_mail, EmailMessage
@@ -18,6 +17,7 @@ from django.contrib.auth import authenticate, login, logout
 from PTU import settings
 from django.conf import settings
 
+from authenticate.models import Account
 from authenticate.forms import UserRegisterForm
 from friend.models import FriendList, FriendRequest
 from friend.request_status import FriendRequestStatus

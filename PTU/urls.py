@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('feedsapi/', include('feedsapi.urls', namespace='feedsapi')),
+    #path('feedsapi/', include('feedsapi.urls', namespace='feedsapi')),
     path('feeds/', include('feeds.urls', namespace='feeds')),
     path('', include('authenticate.urls')),
     path('forum/', include('forums.urls')),
