@@ -12,7 +12,8 @@ function App() {
 
 	useEffect(() => {
 		setAppState({ loading: true });
-		const apiUrl = `http://127.0.0.1:8000/feedsapi/`;
+		console.log("testing")
+		const apiUrl = `http://127.0.0.1:8000/feeds/`;
 		fetch(apiUrl,{ 
 			headers:{ 
 				'Content-Type': 'application/json',
