@@ -11,11 +11,12 @@ from authenticate.models import Account
 from friend.models import FriendList
 from feeds.serializers import CommentsSerializer, FeedsSerializer
 from feeds.models import Feeds, Comments
-
+from django.views.decorators.csrf import csrf_exempt
 
 class PostListView(LoginRequiredMixin, APIView):
     parser_classes = [JSONParser, MultiPartParser, FormParser]
 
+    @csrf_exempt
     def get(self, request, *args, **kwargs):
         logged_in_user = request.user
         followed_people = FriendList.objects.filter(
@@ -27,6 +28,7 @@ class PostListView(LoginRequiredMixin, APIView):
         serializer = FeedsSerializer(posts, many=True)
         return Response(serializer.data)
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         logged_in_user = request.user
         followed_people = FriendList.objects.filter(
