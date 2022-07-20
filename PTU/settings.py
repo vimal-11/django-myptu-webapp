@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from . info2 import *
+from os.path import join
 import os
 from django.contrib.messages import constants as messages
 
@@ -33,7 +34,7 @@ SECRET_KEY = SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'authenticate.Account'
 
@@ -184,9 +185,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+
+# Collect static files here
+STATIC_ROOT = join(BASE_DIR, 'run', 'static_root')
+
 STATIC_URL = '/static/'
 
 #MEDIA_URL = '/images/'
+MEDIA_URL = '/media/'
+
+# Collect media files here
+MEDIA_ROOT = join(BASE_DIR, 'run', 'media_root')
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
@@ -195,12 +204,17 @@ STATICFILES_DIRS = [
 ]
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'PTU.PTU.routing.application'
 
 #authenticate_BACKENDS = ('django.contrib.auth.backends.ModelBackend')
 
@@ -221,3 +235,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 BASE_URL = 'http://127.0.0.1:8000'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880 # 5mb = 5 * 1024 *1024
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    },
+    # Uncomment this to view django_private_chat2's logs
+
+    # 'root': {
+    #     'handlers': ['console'],
+    #     'level': 'INFO',
+    # },
+}
