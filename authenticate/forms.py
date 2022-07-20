@@ -31,7 +31,6 @@ class UserRegisterForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        print(username, "validation username")
         if Account.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError(f'Username {username} aldready exists')
         return username
@@ -65,8 +64,56 @@ class UserRegisterForm(UserCreationForm):
         first_name = self.cleaned_data.get('first_name')
         return first_name
 
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        return last_name
+
     # def clean_contact(self):
     #     contact = self.cleaned_data.get('contact_number')
     #     if len(contact) < 10:
     #         raise forms.ValidationError('Enter a valid contact number')
     #     return contact
+
+
+class AccountUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('username', 'email', 'profile_image', 'first_name', 
+                  'last_name' )
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        try:
+            account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
+        except Account.DoesNotExist:
+            return email
+        raise forms.ValidationError(f'A email {email} has already registered.')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            account = Account.objects.exclude(pk=self.instance.pk).get(username=username)
+        except Account.DoesNotExist:
+            return username
+        raise forms.ValidationError(f'Username {username} aldready exists')
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        return last_name
+
+
+    def save(self, commit=True):
+        account = super(AccountUpdateForm, self).save(commit=False)
+        account.username = self.cleaned_data['username']
+        account.email = self.cleaned_data['email'].lower()
+        account.profile_image = self.cleaned_data['profile_image']
+        account.first_name = self.cleaned_data['first_name']
+        account.last_name = self.cleaned_data['last_name']
+        if commit:
+            account.save()
+        return 

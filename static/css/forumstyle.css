@@ -16,7 +16,7 @@ html{
 }
 
 a{
-    color: #1a73e8;
+    color: var(--color-theme-blue);
     font-weight: bolder;
     text-decoration: none;
 }
@@ -42,7 +42,7 @@ h1{
 }
 
 .subforum-title{
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     padding: 5px;
     padding-left: 20px;
     border-radius: 5px;
@@ -206,7 +206,7 @@ h1{
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: bolder;
     letter-spacing: 1.5px;
-    color: #1a73e8;
+    color: var(--color-theme-blue);
     padding-top: 5px;
 }
 
@@ -228,11 +228,11 @@ h1{
     font-family: "Noto Sans KR", "Poppins", Arial, Helvetica, sans-serif;
     font-weight: 300;
     letter-spacing: 1px;
-    color: #5f6368;
+    color: var(--color-nav-link-grey);
 }
 
 .nav-lnk a:hover{
-    color: #1a73e8;
+    color: var(--color-theme-blue);
     transform: scale(1.03);
 }
 
@@ -319,14 +319,14 @@ h1{
     flex: 1;
     padding: 6px;
     width: 100px;
-    border: 2px solid #5f6368;
+    border: 2px solid var(--color-nav-link-grey);
 }
 
 .search-box  input{
     flex: 1.5;
     padding: 6px;
     width: 250px;
-    border: 3px solid #1a73e8;
+    border: 3px solid var(--color-theme-blue);
     border-radius: 30px;
     margin-left: 20px;
     z-index: 100;
@@ -368,7 +368,7 @@ h1{
     height: 43px;
     padding: 9px 3px;
     border: none;
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     color: #fff;
     margin-right: 24px;
 }
@@ -420,7 +420,7 @@ h1{
 
     .search-but {
         flex: 0;
-        border: 2.5px solid #1a73e8;
+        border: 2.5px solid var(--color-theme-blue);
         width: 250px;
         margin: auto;
         display: flex;
@@ -475,7 +475,7 @@ h1{
 .table-head div{
     padding: 5px;
     margin: 5px;
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     color: #fff;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     letter-spacing: 1.5px;
@@ -559,15 +559,15 @@ h1{
 }
 
 .pagination a{
-    color: #1a73e8;
+    color: var(--color-theme-blue);
     margin-inline: 5px;
     padding: 5px 10px;
-    border: solid 0.5px #1a73e8;
+    border: solid 0.5px var(--color-theme-blue);
 
 }
 
 .pagination a:hover{
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     color: #fff;
 }
 
@@ -604,7 +604,7 @@ h1{
     .table-head div{
         padding: 3px;
         margin: 3px 3.2px 5px 2px;
-        background-color: #1a73e8;
+        background-color: var(--color-theme-blue);
         color: #fff;
         font-family: "Roboto", Arial, Helvetica, sans-serif;
         letter-spacing: 1px;
@@ -685,7 +685,7 @@ h1{
 }
 
 .topic-head div{
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
 }
 
 .content{
@@ -757,7 +757,7 @@ h1{
     padding: 10px;
     cursor: pointer;
     float: right;
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     color: #fff;
 }
 
@@ -785,7 +785,7 @@ h1{
     float: right;
     padding: 10px;
     cursor: pointer;
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     border: none;
     color: #fff;
     width: fit-content;
@@ -846,7 +846,7 @@ h1{
         padding: 7px;
         cursor: pointer;
         float: right;
-        background-color: #1a73e8;
+        background-color: var(--color-theme-blue);
         color: #fff;
         font-size: 12px;
     }
@@ -995,14 +995,14 @@ h1{
 }
 
 #id_title, #id_tags{
-    border: 2px solid #5f6368;
+    border: 2px solid var(--color-nav-link-grey);
     min-width: 400px;
     height: 2.3em;
     background-color: #f2f2f2;
 }
 
 #id_content{
-    border: 2px solid #5f6368;
+    border: 2px solid var(--color-nav-link-grey);
     width: 100%;
     min-height: 300px;
     font-size: 15px;
@@ -1012,7 +1012,7 @@ h1{
 #id_categories{
     width: 200px;
     height: 100px;
-    border: 2px solid #5f6368;
+    border: 2px solid var(--color-nav-link-grey);
     background-color: #f2f2f2;
 }
 
@@ -1035,7 +1035,7 @@ h1{
     height: 40px;
     width: 100px;
     font-family: "Noto Sans KR", Arial, Helvetica, sans-serif;
-    background-color: #1a73e8;
+    background-color: var(--color-theme-blue);
     color: #ffffff;
     cursor: pointer;
 }
